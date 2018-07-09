@@ -1,0 +1,20 @@
+{
+  "name": "@01ht/ht-account-settings",
+  "version": "1.0.2",
+  "main": "ht-account-settings.js",
+  "repository": "https://github.com/01ht/ht-account-settings",
+  "author": "maksimyurkov <yurkov.maksim.sergeevich@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@polymer/lit-element": "^0.5.1",
+    "@polymer/paper-input": "^3.0.0-pre.18",
+    "@polymer/iron-icon": "^3.0.0-pre.18",
+    "@polymer/iron-iconset-svg": "^3.0.0-pre.18",
+    "@polymer/paper-button": "^3.0.0-pre.18",
+    "@polymer/paper-icon-button": "^3.0.0-pre.18",
+    "@polymer/paper-toggle-button": "^3.0.0-pre.18",
+    "@polymer/paper-spinner": "^3.0.0-pre.18",
+    "ht-wysiwyg": "https://github.com/maksimyurkov/ht-wysiwyg",
+    "cropperjs": "^1.4.0"
+  }
+}
