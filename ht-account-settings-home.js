@@ -1,6 +1,6 @@
 "use strict";
 import { LitElement, html } from "@polymer/lit-element";
-import "ht-image";
+import "@01ht/ht-image";
 import "@polymer/iron-iconset-svg";
 import "@polymer/iron-icon";
 

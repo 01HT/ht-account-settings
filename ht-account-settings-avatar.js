@@ -6,7 +6,7 @@ import "@polymer/iron-icon";
 import "@polymer/paper-button";
 import "@polymer/paper-icon-button";
 import "@polymer/paper-spinner/paper-spinner.js";
-import "ht-image";
+import "@01ht/ht-image";
 import "./ht-account-settings-avatar-cropper";
 
 import { callFirebaseHTTPFunction } from "ht-client-helper-functions";

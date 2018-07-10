@@ -6,7 +6,7 @@ import "@polymer/iron-icon";
 import "@polymer/paper-tooltip";
 import "@polymer/paper-input/paper-input.js";
 import "@polymer/paper-spinner/paper-spinner.js";
-import "ht-wysiwyg";
+import "@01ht/ht-wysiwyg";
 import "./ht-account-settings-header";
 
 class HTAccountSettingsPersonal extends LitElement {

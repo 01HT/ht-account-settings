@@ -7,7 +7,7 @@ import "@polymer/paper-icon-button";
 import "@polymer/iron-iconset-svg";
 import "@polymer/iron-icon";
 import "./ht-account-settings-header";
-import "./zxcvbn";
+import "zxcvbn/dist/zxcvbn.js";
 
 class HTAccountSettingsPassword extends LitElement {
   _render({ loading, strengthObj }) {
