@@ -100,23 +100,23 @@ class HTAccountSettingsPassword extends LitElement {
         подобрать.
         <a href="https://support.google.com/accounts/answer/32040" target="_blank">Подробнее...</a></p>
         <paper-input id="new" label="Новый пароль" minlength="8" auto-validate type="password" on-change=${_ => {
-          this._passwordChanged();
-        }} on-keyup=${_ => {
-      this._passwordChanged();
-    }}></paper-input>
+        this._passwordChanged();
+      }} on-keyup=${_ => {
+        this._passwordChanged();
+      }}></paper-input>
     <div id="strength" class="text">Надежность пароля: <span style$="color:${
       strengthObj.color
-    }">${strengthObj.name}</span></div>
+      }">${strengthObj.name}</span></div>
         <paper-input id="repeat" label="Подтвердите новый пароль" type="password" on-change=${_ => {
-          this._checkRepeat();
-        }} on-keyup=${_ => {
-      this._checkRepeat();
-    }}></paper-input>
+        this._checkRepeat();
+      }} on-keyup=${_ => {
+        this._checkRepeat();
+      }}></paper-input>
         <paper-input id="current" label="Введите ваш действующий пароль" type="password"></paper-input>
         <div id="action">
             <paper-button raised class="save" hidden?=${loading} on-click=${e => {
-      this._save();
-    }}>Изменить пароль
+        this._save();
+      }}>Изменить пароль
             </paper-button>
             <paper-spinner active?=${loading} hidden?=${!loading}></paper-spinner>
         </div>
@@ -180,16 +180,6 @@ class HTAccountSettingsPassword extends LitElement {
       this.repeatInput.removeAttribute("invalid");
       return true;
     }
-  }
-
-  _firstRendered() {
-    let script = document.createElement("script");
-    script.src = "/node_modules/@01ht/ht-account-settings/zxcvbn.js";
-    script.async = true;
-    script.onload = _ => {
-      this.zxcvbnReady = true;
-    };
-    document.querySelector("head").appendChild(script);
   }
 
   async _save() {
