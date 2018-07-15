@@ -5,8 +5,8 @@ import "@polymer/iron-iconset-svg";
 import "@polymer/iron-icon";
 import "@polymer/paper-button";
 import "@polymer/paper-icon-button";
-import "@polymer/paper-spinner/paper-spinner.js";
 import "@01ht/ht-image";
+import "@01ht/ht-spinner";
 import "./ht-account-settings-avatar-cropper";
 
 import { callFirebaseHTTPFunction } from "@01ht/ht-client-helper-functions";
@@ -45,12 +45,6 @@ class HTAccountSettingsAvatar extends LitElement {
 
     paper-icon-button {
       margin-right:16px;
-    }
-
-    paper-spinner {
-      --paper-spinner-stroke-width: 4px;
-      width:64px;
-      height:64px;
     }
 
     #container {
@@ -168,36 +162,36 @@ class HTAccountSettingsAvatar extends LitElement {
             </div>
             <div id="preview">
             <ht-image image="${
-      window.CDNURL
-      }/c_scale,r_max,f_auto,h_256,w_256/${
+              window.CDNURL
+            }/c_scale,r_max,f_auto,h_256,w_256/${
       data.photoURL
-      }.jpg" placeholder="
+    }.jpg" placeholder="
                   ${window.CDNURL}/c_scale,r_max,f_auto,h_32,w_32/${
       data.photoURL
-      }.jpg"></ht-image>
+    }.jpg"></ht-image>
             </div>
             <div id="sync" hidden?=${providerItems.length === 0 ? true : false}>
                 <div id="sync-list">
                 ${repeat(
-        providerItems,
-        item =>
-          html`<paper-button raised provider$="${
-            item.providerId
-            }" on-click=${e => {
-              this._syncSocial(e);
-            }}><div><img src="${
-            item.photoURL
-            }"></div><div><iron-icon src="https://storage.googleapis.com/api-01-ht.appspot.com/default/social/${item.providerId.replace(
-              ".com",
-              ""
-            )}.svg"></iron-icon>${item.providerId.replace(
-              ".com",
-              ""
-            )}</div></paper-button>`
-      )}
+                  providerItems,
+                  item =>
+                    html`<paper-button raised provider$="${
+                      item.providerId
+                    }" on-click=${e => {
+                      this._syncSocial(e);
+                    }}><div><img src="${
+                      item.photoURL
+                    }"></div><div><iron-icon src="https://storage.googleapis.com/api-01-ht.appspot.com/default/social/${item.providerId.replace(
+                      ".com",
+                      ""
+                    )}.svg"></iron-icon>${item.providerId.replace(
+                      ".com",
+                      ""
+                    )}</div></paper-button>`
+                )}
                 <paper-button raised on-click=${_ => {
-        this._setDefaultAvatar();
-      }}><div><img src="https://storage.googleapis.com/api-01-ht.appspot.com/default/user/avatar.jpg"></div><div>Стандартный</div></paper-button>
+                  this._setDefaultAvatar();
+                }}><div><img src="https://storage.googleapis.com/api-01-ht.appspot.com/default/user/avatar.jpg"></div><div>Стандартный</div></paper-button>
                 
                 </div>
             </div>
@@ -206,7 +200,7 @@ class HTAccountSettingsAvatar extends LitElement {
             </div>
         </div>
         <div id="loading" hidden?=${!loading}>
-          <paper-spinner active?=${loading}></paper-spinner>
+          <ht-spinner></ht-spinner>
         </div>
     </div>`;
   }

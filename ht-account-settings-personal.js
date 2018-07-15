@@ -5,7 +5,7 @@ import "@polymer/iron-iconset-svg";
 import "@polymer/iron-icon";
 import "@polymer/paper-tooltip";
 import "@polymer/paper-input/paper-input.js";
-import "@polymer/paper-spinner/paper-spinner.js";
+import "@01ht/ht-spinner";
 import "@01ht/ht-wysiwyg";
 import "./ht-account-settings-header";
 
@@ -30,13 +30,6 @@ class HTAccountSettingsPersonal extends LitElement {
             color: #fff;
             margin: 0;
             padding: 8px 16px;
-        }
-
-        paper-spinner {
-            width: 32px;
-            height: 32px;
-            --paper-spinner-stroke-width: 2px;
-            margin-right:8px;
         }
 
         paper-input {
@@ -96,8 +89,7 @@ class HTAccountSettingsPersonal extends LitElement {
       this._save();
     }}>Сохранить
             </paper-button>
-
-            <paper-spinner active?=${loading} hidden?=${!loading}></paper-spinner>
+            <ht-spinner button hidden?=${!loading}></ht-spinner>
         </div>
     </div>`;
   }

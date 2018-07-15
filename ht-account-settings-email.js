@@ -2,7 +2,7 @@
 import { LitElement, html } from "@polymer/lit-element";
 import "@polymer/paper-button";
 import "@polymer/paper-input/paper-input.js";
-import "@polymer/paper-spinner/paper-spinner.js";
+import "@01ht/ht-spinner";
 import "./ht-account-settings-header";
 
 class HTAccountSettingsEmail extends LitElement {
@@ -20,13 +20,6 @@ class HTAccountSettingsEmail extends LitElement {
             color: #fff;
             margin: 0;
             padding: 8px 16px;
-        }
-    
-        paper-spinner {
-            width: 32px;
-            height: 32px;
-            --paper-spinner-stroke-width: 2px;
-            margin-right: 8px;
         }
     
         paper-input {
@@ -65,7 +58,7 @@ class HTAccountSettingsEmail extends LitElement {
       this._changeEmail();
     }}>Изменить адрес почты
             </paper-button>
-            <paper-spinner active?=${loading} hidden?=${!loading}></paper-spinner>
+            <ht-spinner button hidden?=${!loading}></ht-spinner>
         </div>
     </div>`;
   }

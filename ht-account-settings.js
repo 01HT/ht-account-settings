@@ -1,6 +1,6 @@
 "use strict";
 import { LitElement, html } from "@polymer/lit-element";
-import "@polymer/paper-spinner/paper-spinner.js";
+import "@01ht/ht-spinner";
 import "./ht-account-settings-home";
 import "./ht-account-settings-password";
 import "./ht-account-settings-email";
@@ -19,23 +19,9 @@ class HTAccountSettings extends LitElement {
         box-sizing: border-box;
     }
 
-    paper-spinner {
-      --paper-spinner-stroke-width: 4px;
-      margin-top:64px;
-      width:64px;
-      height:64px;
-      align-self:center;
-    }
-
     #container {
       display:flex;
       flex-direction:column;
-    }
-
-    #spinner-container {
-      display:flex;
-      justify-content:center;
-      margin-top:64px;
     }
 
     #main > * {
@@ -46,12 +32,12 @@ class HTAccountSettings extends LitElement {
         display: block;
     }
 
-    [hidden], #spinner[hidden] {
+    [hidden] {
       display:none;
     }
     </style>
     <div id="container">
-      <paper-spinner active?=${loading} hidden?=${!loading}></paper-spinner>
+      <ht-spinner hidden?=${!loading} page></ht-spinner>
       <div id="main" hidden?=${loading}>
         <ht-account-settings-home active?=${page ===
           "home"} data=${userData}></ht-account-settings-home>
@@ -79,16 +65,16 @@ class HTAccountSettings extends LitElement {
     return {
       userData: Object,
       loading: Boolean,
-      page: String
+      page: String,
+      userId: String
     };
   }
 
-  set userId(userId) {
-    this._updateUserData(userId);
-  }
-
-  async _updateUserData(userId) {
+  async update(userId, page) {
     try {
+      if (this.userId === userId && this.page === page) return;
+      this.userId = userId;
+      this.page = page;
       this.loading = true;
       let snapshot = await firebase
         .firestore()
@@ -99,7 +85,7 @@ class HTAccountSettings extends LitElement {
       this.userData = userData;
       this.loading = false;
     } catch (error) {
-      console.log("_updateUserData: " + error.message);
+      console.log("update: " + error.message);
     }
   }
 }

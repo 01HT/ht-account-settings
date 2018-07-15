@@ -1,7 +1,7 @@
 "use strict";
 import { LitElement, html } from "@polymer/lit-element";
 import "@polymer/paper-toggle-button";
-import "@polymer/paper-spinner/paper-spinner.js";
+import "@01ht/ht-spinner";
 import "./ht-account-settings-header";
 
 class HTAccountSettingsNotifications extends LitElement {
@@ -19,13 +19,6 @@ class HTAccountSettingsNotifications extends LitElement {
         color: #fff;
         margin: 0;
         padding: 8px 16px;
-      }
-    
-      paper-spinner {
-        width: 32px;
-        height: 32px;
-        --paper-spinner-stroke-width: 2px;
-        margin-right: 8px;
       }
     
       ht-account-settings-header {
@@ -64,7 +57,7 @@ class HTAccountSettingsNotifications extends LitElement {
       this._save();
     }}>Сохранить
         </paper-button>
-        <paper-spinner active?=${loading} hidden?=${!loading}></paper-spinner>
+        <ht-spinner button hidden?=${!loading}></ht-spinner>
       </div>
     </div>`;
   }

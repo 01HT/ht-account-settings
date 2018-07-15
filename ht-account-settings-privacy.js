@@ -1,7 +1,7 @@
 "use strict";
 import { LitElement, html } from "@polymer/lit-element";
 import "@polymer/paper-toggle-button";
-import "@polymer/paper-spinner/paper-spinner.js";
+import "@01ht/ht-spinner";
 import "./ht-account-settings-header";
 
 class HTAccountSettingsPrivacy extends LitElement {
@@ -82,7 +82,7 @@ class HTAccountSettingsPrivacy extends LitElement {
       this._save();
     }}>Сохранить
         </paper-button>
-        <paper-spinner active?=${loading} hidden?=${!loading}></paper-spinner>
+        <ht-spinner button hidden?=${!loading}></ht-spinner>
       </div>
     </div>`;
   }
