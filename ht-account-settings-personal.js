@@ -81,6 +81,11 @@ class HTAccountSettingsPersonal extends LitElement {
         <paper-input id="company" label="Место работы"></paper-input>
         <paper-input id="position" label="Должность"></paper-input>
         <paper-input id="phone" label="Телефон"></paper-input>
+        <paper-input id="website" label="Ваш сайт"></paper-input>
+        <paper-input id="google" label="Google+"></paper-input>
+        <paper-input id="facebook" label="Facebook"></paper-input>
+        <paper-input id="twitter" label="Twitter"></paper-input>
+        <paper-input id="github" label="GitHub"></paper-input>
         <h4>О себе</h4>
         <ht-wysiwyg id="description"></ht-wysiwyg>
     
@@ -116,6 +121,11 @@ class HTAccountSettingsPersonal extends LitElement {
     this.shadowRoot.querySelector("#company").value = data.company;
     this.shadowRoot.querySelector("#position").value = data.position;
     this.shadowRoot.querySelector("#phone").value = data.phone;
+    this.shadowRoot.querySelector("#website").value = data.website;
+    this.shadowRoot.querySelector("#google").value = data.google;
+    this.shadowRoot.querySelector("#facebook").value = data.facebook;
+    this.shadowRoot.querySelector("#twitter").value = data.twitter;
+    this.shadowRoot.querySelector("#github").value = data.github;
     this.shadowRoot.querySelector("#description").setData(data.description);
     this._setEmailVerified();
   }
@@ -154,6 +164,11 @@ class HTAccountSettingsPersonal extends LitElement {
       updates.company = this.shadowRoot.querySelector("#company").value;
       updates.position = this.shadowRoot.querySelector("#position").value;
       updates.phone = this.shadowRoot.querySelector("#phone").value;
+      updates.website = this.shadowRoot.querySelector("#website").value;
+      updates.google = this.shadowRoot.querySelector("#google").value;
+      updates.facebook = this.shadowRoot.querySelector("#facebook").value;
+      updates.twitter = this.shadowRoot.querySelector("#twitter").value;
+      updates.github = this.shadowRoot.querySelector("#github").value;
       updates.description = this.shadowRoot
         .querySelector("#description")
         .getData();

@@ -1,6 +1,6 @@
 {
   "name": "@01ht/ht-account-settings",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "ht-account-settings.js",
   "repository": "01ht/ht-account-settings",
   "author": "01ht Ltd",

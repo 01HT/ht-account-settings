@@ -9,7 +9,10 @@ import "@01ht/ht-image";
 import "@01ht/ht-spinner";
 import "./ht-account-settings-avatar-cropper";
 
-import { callFirebaseHTTPFunction } from "@01ht/ht-client-helper-functions";
+import {
+  // callTestHTTPFunction,
+  callFirebaseHTTPFunction
+} from "@01ht/ht-client-helper-functions";
 
 class HTAccountSettingsAvatar extends LitElement {
   _render({ data, loading }) {
@@ -161,12 +164,10 @@ class HTAccountSettingsAvatar extends LitElement {
               <h1>Сменить аватар</h1>
             </div>
             <div id="preview">
-            <ht-image image="${
-              window.CDNURL
-            }/c_scale,r_max,f_auto,h_256,w_256/${
+            <ht-image image="${cloudinaryURL}/c_scale,r_max,f_auto,h_256,w_256/${
       data.photoURL
     }.jpg" placeholder="
-                  ${window.CDNURL}/c_scale,r_max,f_auto,h_32,w_32/${
+                  ${cloudinaryURL}/c_scale,r_max,f_auto,h_32,w_32/${
       data.photoURL
     }.jpg"></ht-image>
             </div>
@@ -181,18 +182,18 @@ class HTAccountSettingsAvatar extends LitElement {
                       this._syncSocial(e);
                     }}><div><img src="${
                       item.photoURL
-                    }"></div><div><iron-icon src="https://storage.googleapis.com/api-01-ht.appspot.com/default/social/${item.providerId.replace(
+                    }"></div><div><iron-icon src="${cloudinaryURL}/image/upload/logos/${item.providerId.replace(
                       ".com",
                       ""
-                    )}.svg"></iron-icon>${item.providerId.replace(
+                    )}/logo.svg"></iron-icon>${item.providerId.replace(
                       ".com",
                       ""
                     )}</div></paper-button>`
                 )}
                 <paper-button raised on-click=${_ => {
                   this._setDefaultAvatar();
-                }}><div><img src="https://storage.googleapis.com/api-01-ht.appspot.com/default/user/avatar.jpg"></div><div>Стандартный</div></paper-button>
-                
+                }}><div><img src="${cloudinaryURL}/image/upload/users/default.svg"></div><div>Стандартный</div>
+                </paper-button>
                 </div>
             </div>
             <div id="cropper">
@@ -241,6 +242,7 @@ class HTAccountSettingsAvatar extends LitElement {
           })
         }
       };
+      // callTestHTTPFunction;
       await callFirebaseHTTPFunction(functionOptions);
       location.reload();
     } catch (err) {
@@ -264,6 +266,7 @@ class HTAccountSettingsAvatar extends LitElement {
           })
         }
       };
+      // callTestHTTPFunction;
       await callFirebaseHTTPFunction(functionOptions);
       location.reload();
     } catch (err) {
@@ -274,17 +277,60 @@ class HTAccountSettingsAvatar extends LitElement {
   async _setCustomAvatar(file) {
     try {
       this.loading = true;
+      let uid = firebase.auth().currentUser.uid;
+      let timestamp = new Date().getTime();
+
+      let signature = await this._getUploadSignature(timestamp);
       let formData = new FormData();
-      formData.append("myfile", file);
-      let functionOptions = {
-        name: "httpsUsersSetCustomAvatar",
-        options: { method: "POST", body: formData },
-        authorization: true
-      };
-      await callFirebaseHTTPFunction(functionOptions);
+      formData.append("file", file);
+      formData.append("api_key", "431217584574227");
+      formData.append("signature", signature);
+      formData.append("public_id", `users/${uid}`);
+      formData.append("timestamp", timestamp);
+
+      let response = await fetch(
+        "https://api.cloudinary.com/v1_1/cdn-01ht/image/upload",
+        {
+          method: "POST",
+          body: formData
+        }
+      );
+      const data = await response.json();
+      const version = data.version;
+      if (!version) return;
+      await firebase
+        .firestore()
+        .collection("users")
+        .doc(uid)
+        .update({
+          photoURL: `v${version}/users/${uid}`
+        });
+
       location.reload();
     } catch (err) {
       console.log("_setCustomAvatar: " + err.message);
+    }
+  }
+
+  async _getUploadSignature(timestamp) {
+    try {
+      let idToken = await firebase.auth().currentUser.getIdToken();
+
+      let functionOptions = {
+        name: "httpsUsersGetSignatureForUserCustomAvatarUpload",
+        options: {
+          method: "POST",
+          headers: new Headers({
+            "Content-Type": "application/json"
+          }),
+          body: JSON.stringify({ idToken: idToken, timestamp: timestamp })
+        }
+      };
+      // callTestHTTPFunction;
+      let signature = await callFirebaseHTTPFunction(functionOptions);
+      return signature;
+    } catch (err) {
+      console.log("_getUploadSignature:" + err.message);
     }
   }
 }

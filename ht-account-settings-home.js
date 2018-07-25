@@ -133,11 +133,9 @@ class HTAccountSettingsHome extends LitElement {
     <div id="container">
         <div id="avatar">
             <a href="/account/avatar">
-                <ht-image image$="${
-                  window.CDNURL
-                }/c_scale,r_max,f_auto,h_256,w_256/${
+                <ht-image image$="${cloudinaryURL}/c_scale,r_max,f_auto,h_256,w_256/${
       data.photoURL
-    }.jpg" placeholder$="${window.CDNURL}/c_scale,r_max,f_auto,h_32,w_32/${
+    }.jpg" placeholder$="${cloudinaryURL}/c_scale,r_max,f_auto,h_32,w_32/${
       data.photoURL
     }.jpg">
                 </ht-image>
