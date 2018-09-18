@@ -10,7 +10,8 @@ import "@01ht/ht-wysiwyg";
 import "./ht-account-settings-header";
 
 class HTAccountSettingsPersonal extends LitElement {
-  _render({ loading, emailVerified }) {
+  render() {
+    const { data, loading, emailVerified } = this;
     return html`
     <style>
         :host {
@@ -67,34 +68,62 @@ class HTAccountSettingsPersonal extends LitElement {
     <div id="container">
         <ht-account-settings-header text="Личная информация"></ht-account-settings-header>
         <div id="email-container">
-          <paper-input id="email" label="Адрес электронной почты" disabled></paper-input>
-          <paper-button raised hidden?=${emailVerified} on-click=${_ => {
+          <paper-input id="email" label="Адрес электронной почты" disabled value=${
+            data.email
+          }></paper-input>
+          <paper-button raised ?hidden=${emailVerified} @click=${_ => {
       this._sendEmailVerification();
     }}>Подтвердить email</paper-button>
           <!--<paper-tooltip>Адрес электронной почты меняется автоматически при входе в систему.</paper-tooltip>-->
         </div>
-        <paper-input id="displayName" label="Отображаемое имя"></paper-input>
-        <paper-input id="lastName" label="Фамилия"></paper-input>
-        <paper-input id="firstName" label="Имя"></paper-input>
-        <paper-input id="country" label="Страна"></paper-input>
-        <paper-input id="city" label="Город" auto-validate></paper-input>
-        <paper-input id="company" label="Место работы"></paper-input>
-        <paper-input id="position" label="Должность"></paper-input>
-        <paper-input id="phone" label="Телефон"></paper-input>
-        <paper-input id="website" label="Ваш сайт"></paper-input>
-        <paper-input id="google" label="Google+"></paper-input>
-        <paper-input id="facebook" label="Facebook"></paper-input>
-        <paper-input id="twitter" label="Twitter"></paper-input>
-        <paper-input id="github" label="GitHub"></paper-input>
+        <paper-input id="displayName" label="Отображаемое имя" value=${
+          data.displayName
+        }></paper-input>
+        <paper-input id="lastName" label="Фамилия" value=${
+          data.lastName
+        }></paper-input>
+        <paper-input id="firstName" label="Имя" value=${
+          data.firstName
+        }></paper-input>
+        <paper-input id="country" label="Страна" value=${
+          data.country
+        }></paper-input>
+        <paper-input id="city" label="Город" auto-validate value=${
+          data.city
+        }></paper-input>
+        <paper-input id="company" label="Место работы" value=${
+          data.company
+        }></paper-input>
+        <paper-input id="position" label="Должность" value=${
+          data.position
+        }></paper-input>
+        <paper-input id="phone" label="Телефон" value=${
+          data.phone
+        }></paper-input>
+        <paper-input id="website" label="Ваш сайт" value=${
+          data.website
+        }></paper-input>
+        <paper-input id="google" label="Google+" value=${
+          data.google
+        }></paper-input>
+        <paper-input id="facebook" label="Facebook" value=${
+          data.facebook
+        }></paper-input>
+        <paper-input id="twitter" label="Twitter" value=${
+          data.twitter
+        }></paper-input>
+        <paper-input id="github" label="GitHub" value=${
+          data.github
+        }></paper-input>
         <h4>О себе</h4>
         <ht-wysiwyg id="description"></ht-wysiwyg>
     
         <div id="action">
-            <paper-button raised class="save" hidden?=${loading} on-click=${e => {
+            <paper-button raised class="save" ?hidden=${loading} @click=${e => {
       this._save();
     }}>Сохранить
             </paper-button>
-            <ht-spinner button hidden?=${!loading}></ht-spinner>
+            <ht-spinner button ?hidden=${!loading}></ht-spinner>
         </div>
     </div>`;
   }
@@ -105,29 +134,20 @@ class HTAccountSettingsPersonal extends LitElement {
 
   static get properties() {
     return {
-      data: Object,
-      loading: Boolean,
-      emailVerified: Boolean
+      data: { type: Object },
+      loading: { type: Boolean },
+      emailVerified: { type: Boolean },
+      active: { type: Boolean }
     };
   }
 
-  set data(data) {
-    this.shadowRoot.querySelector("#email").value = data.email;
-    this.shadowRoot.querySelector("#displayName").value = data.displayName;
-    this.shadowRoot.querySelector("#lastName").value = data.lastName;
-    this.shadowRoot.querySelector("#firstName").value = data.firstName;
-    this.shadowRoot.querySelector("#country").value = data.country;
-    this.shadowRoot.querySelector("#city").value = data.city;
-    this.shadowRoot.querySelector("#company").value = data.company;
-    this.shadowRoot.querySelector("#position").value = data.position;
-    this.shadowRoot.querySelector("#phone").value = data.phone;
-    this.shadowRoot.querySelector("#website").value = data.website;
-    this.shadowRoot.querySelector("#google").value = data.google;
-    this.shadowRoot.querySelector("#facebook").value = data.facebook;
-    this.shadowRoot.querySelector("#twitter").value = data.twitter;
-    this.shadowRoot.querySelector("#github").value = data.github;
-    this.shadowRoot.querySelector("#description").setData(data.description);
-    this._setEmailVerified();
+  updated(changedProperties) {
+    if (changedProperties.has("data") && this.active) {
+      this.shadowRoot
+        .querySelector("#description")
+        .setData(this.data.description);
+      this._setEmailVerified();
+    }
   }
 
   async _setEmailVerified() {

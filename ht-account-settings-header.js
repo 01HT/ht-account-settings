@@ -4,7 +4,8 @@ import "@polymer/iron-iconset-svg";
 import "@polymer/paper-icon-button";
 
 class HTAccountSettingsHeader extends LitElement {
-  _render({ text }) {
+  render() {
+    const { text } = this;
     return html`
     <style>
     :host {
@@ -50,7 +51,7 @@ class HTAccountSettingsHeader extends LitElement {
 
   static get properties() {
     return {
-      text: String
+      text: { type: String }
     };
   }
 }

@@ -1,6 +1,6 @@
 "use strict";
 import { LitElement, html } from "@polymer/lit-element";
-import { repeat } from "lit-html/lib/repeat.js";
+import { repeat } from "lit-html/directives/repeat.js";
 import "@polymer/iron-iconset-svg";
 import "@polymer/iron-icon";
 import "@polymer/paper-button";
@@ -15,8 +15,8 @@ import {
 } from "@01ht/ht-client-helper-functions";
 
 class HTAccountSettingsAvatar extends LitElement {
-  _render({ data, loading }) {
-    if (!data) return;
+  render() {
+    const { data, loading } = this;
     let providerItems = firebase.auth().currentUser.providerData;
     return html`
     <style>
@@ -112,6 +112,7 @@ class HTAccountSettingsAvatar extends LitElement {
       display: block;
       border-radius: 50%;
       width: 64px;
+      border: 1px solid #fff;
       margin: 8px 0 16px 0;
       background:#fff;
     }
@@ -164,21 +165,26 @@ class HTAccountSettingsAvatar extends LitElement {
               <h1>Сменить аватар</h1>
             </div>
             <div id="preview">
-            <ht-image image="${cloudinaryURL}/c_scale,r_max,f_auto,h_256,w_256/${
-      data.photoURL
-    }.jpg" placeholder="
-                  ${cloudinaryURL}/c_scale,r_max,f_auto,h_32,w_32/${
-      data.photoURL
-    }.jpg"></ht-image>
+            <ht-image image="${
+              window.cloudinaryURL
+            }/c_scale,r_max,f_auto,h_256,w_256/v${data.avatar.version}/${
+      data.avatar.public_id
+    }.${data.avatar.format}" placeholder="${
+      window.cloudinaryURL
+    }/c_scale,r_max,f_auto,h_32,w_32/v${data.avatar.version}/${
+      data.avatar.public_id
+    }.${data.avatar.format}"></ht-image>
             </div>
-            <div id="sync" hidden?=${providerItems.length === 0 ? true : false}>
+            <div id="sync" ?hidden=${
+              providerItems && providerItems.length === 0 ? true : false
+            }>
                 <div id="sync-list">
                 ${repeat(
                   providerItems,
                   item =>
-                    html`<paper-button raised provider$="${
+                    html`<paper-button raised provider="${
                       item.providerId
-                    }" on-click=${e => {
+                    }" @click=${e => {
                       this._syncSocial(e);
                     }}><div><img src="${
                       item.photoURL
@@ -190,7 +196,7 @@ class HTAccountSettingsAvatar extends LitElement {
                       ""
                     )}</div></paper-button>`
                 )}
-                <paper-button raised on-click=${_ => {
+                <paper-button raised @click=${_ => {
                   this._setDefaultAvatar();
                 }}><div><img src="${cloudinaryURL}/image/upload/users/default.svg"></div><div>Стандартный</div>
                 </paper-button>
@@ -200,7 +206,7 @@ class HTAccountSettingsAvatar extends LitElement {
                 <ht-account-settings-avatar-cropper></ht-account-settings-avatar-cropper>
             </div>
         </div>
-        <div id="loading" hidden?=${!loading}>
+        <div id="loading" ?hidden=${!loading}>
           <ht-spinner></ht-spinner>
         </div>
     </div>`;
@@ -212,12 +218,12 @@ class HTAccountSettingsAvatar extends LitElement {
 
   static get properties() {
     return {
-      data: Object,
-      loading: Boolean
+      data: { type: Object },
+      loading: { type: Boolean }
     };
   }
 
-  _firstRendered() {
+  firstUpdated() {
     this.addEventListener("on-custom-avatar-save", e => {
       e.stopPropagation();
       this._setCustomAvatar(e.detail.file);
@@ -242,7 +248,6 @@ class HTAccountSettingsAvatar extends LitElement {
           })
         }
       };
-      // callTestHTTPFunction;
       await callFirebaseHTTPFunction(functionOptions);
       location.reload();
     } catch (err) {
@@ -266,7 +271,6 @@ class HTAccountSettingsAvatar extends LitElement {
           })
         }
       };
-      // callTestHTTPFunction;
       await callFirebaseHTTPFunction(functionOptions);
       location.reload();
     } catch (err) {
@@ -296,14 +300,13 @@ class HTAccountSettingsAvatar extends LitElement {
         }
       );
       const data = await response.json();
-      const version = data.version;
-      if (!version) return;
+      if (!data) return;
       await firebase
         .firestore()
         .collection("users")
         .doc(uid)
         .update({
-          photoURL: `v${version}/users/${uid}`
+          avatar: data
         });
 
       location.reload();
@@ -326,7 +329,6 @@ class HTAccountSettingsAvatar extends LitElement {
           body: JSON.stringify({ idToken: idToken, timestamp: timestamp })
         }
       };
-      // callTestHTTPFunction;
       let signature = await callFirebaseHTTPFunction(functionOptions);
       return signature;
     } catch (err) {

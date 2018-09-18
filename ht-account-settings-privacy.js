@@ -5,7 +5,8 @@ import "@01ht/ht-spinner";
 import "./ht-account-settings-header";
 
 class HTAccountSettingsPrivacy extends LitElement {
-  _render({ loading }) {
+  render() {
+    const { data, loading } = this;
     return html`
     <style>
       :host {
@@ -57,32 +58,46 @@ class HTAccountSettingsPrivacy extends LitElement {
     <div id="container">
       <ht-account-settings-header text="Настройки конфиденциальности"></ht-account-settings-header>
       <div class="toggle-container">
-        <paper-toggle-button id="fullName">Отображать ФИО</paper-toggle-button>
+        <paper-toggle-button id="fullName" .checked=${
+          data.privacy.fullName
+        }>Отображать ФИО</paper-toggle-button>
       </div>
       <div class="toggle-container">
-        <paper-toggle-button id="email">Отображать Email</paper-toggle-button>
+        <paper-toggle-button id="email" .checked=${
+          data.privacy.email
+        }>Отображать Email</paper-toggle-button>
       </div>
       <div class="toggle-container">
-        <paper-toggle-button id="country">Отображать страну</paper-toggle-button>
+        <paper-toggle-button id="country" .checked=${
+          data.privacy.country
+        }>Отображать страну</paper-toggle-button>
       </div>
       <div class="toggle-container">
-        <paper-toggle-button id="city">Отображать город</paper-toggle-button>
+        <paper-toggle-button id="city" .checked=${
+          data.privacy.city
+        }>Отображать город</paper-toggle-button>
       </div>
       <div class="toggle-container">
-        <paper-toggle-button id="company">Отображать место работы</paper-toggle-button>
+        <paper-toggle-button id="company" .checked=${
+          data.privacy.company
+        }>Отображать место работы</paper-toggle-button>
       </div>
       <div class="toggle-container">
-        <paper-toggle-button id="position">Отображать должность</paper-toggle-button>
+        <paper-toggle-button id="position" .checked=${
+          data.privacy.position
+        }>Отображать должность</paper-toggle-button>
       </div>
       <div class="toggle-container">
-        <paper-toggle-button id="phone">Отображать телефон</paper-toggle-button>
+        <paper-toggle-button id="phone" .checked=${
+          data.privacy.phone
+        }>Отображать телефон</paper-toggle-button>
       </div>
       <div id="action">
-        <paper-button raised class="save" hidden?=${loading} on-click=${e => {
+        <paper-button raised class="save" ?hidden=${loading} @click=${e => {
       this._save();
     }}>Сохранить
         </paper-button>
-        <ht-spinner button hidden?=${!loading}></ht-spinner>
+        <ht-spinner button ?hidden=${!loading}></ht-spinner>
       </div>
     </div>`;
   }
@@ -93,19 +108,9 @@ class HTAccountSettingsPrivacy extends LitElement {
 
   static get properties() {
     return {
-      data: Object,
-      loading: Boolean
+      data: { type: Object },
+      loading: { type: Boolean }
     };
-  }
-
-  set data(data) {
-    this.shadowRoot.querySelector("#fullName").checked = data.privacy.fullName;
-    this.shadowRoot.querySelector("#email").checked = data.privacy.email;
-    this.shadowRoot.querySelector("#country").checked = data.privacy.country;
-    this.shadowRoot.querySelector("#city").checked = data.privacy.city;
-    this.shadowRoot.querySelector("#company").checked = data.privacy.company;
-    this.shadowRoot.querySelector("#position").checked = data.privacy.position;
-    this.shadowRoot.querySelector("#phone").checked = data.privacy.phone;
   }
 
   async _save() {

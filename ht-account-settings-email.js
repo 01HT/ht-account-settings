@@ -6,7 +6,8 @@ import "@01ht/ht-spinner";
 import "./ht-account-settings-header";
 
 class HTAccountSettingsEmail extends LitElement {
-  _render({ loading }) {
+  render() {
+    const { loading } = this;
     return html`
     <style>
         :host {
@@ -54,11 +55,11 @@ class HTAccountSettingsEmail extends LitElement {
         <paper-input id="email" label="Новый email"></paper-input>
         <paper-input id="password" label="Введите ваш действующий пароль" type="password"></paper-input>
         <div id="action">
-            <paper-button raised class="save" hidden?=${loading} on-click=${e => {
+            <paper-button raised class="save" ?hidden=${loading} @click=${e => {
       this._changeEmail();
     }}>Изменить адрес почты
             </paper-button>
-            <ht-spinner button hidden?=${!loading}></ht-spinner>
+            <ht-spinner button ?hidden=${!loading}></ht-spinner>
         </div>
     </div>`;
   }
@@ -69,12 +70,9 @@ class HTAccountSettingsEmail extends LitElement {
 
   static get properties() {
     return {
-      loading: Boolean
+      loading: { type: Boolean },
+      data: { type: Object }
     };
-  }
-
-  constructor() {
-    super();
   }
 
   set data(userData) {

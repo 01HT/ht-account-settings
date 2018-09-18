@@ -5,7 +5,8 @@ import "@01ht/ht-spinner";
 import "./ht-account-settings-header";
 
 class HTAccountSettingsNotifications extends LitElement {
-  _render({ loading }) {
+  render() {
+    const { data, loading } = this;
     return html`
     <style>
       :host {
@@ -50,14 +51,16 @@ class HTAccountSettingsNotifications extends LitElement {
     <div id="container">
       <ht-account-settings-header text="Настройки уведомлений"></ht-account-settings-header>
       <div class="toggle-container">
-        <paper-toggle-button id="monthDigest">Присылать ежемесячный дайджест</paper-toggle-button>
+        <paper-toggle-button id="monthDigest" .checked=${
+          data.notifications.monthDigest
+        }>Присылать ежемесячный дайджест</paper-toggle-button>
       </div>
       <div id="action">
-        <paper-button raised class="save" hidden?=${loading} on-click=${e => {
+        <paper-button raised class="save" ?hidden=${loading} @click=${e => {
       this._save();
     }}>Сохранить
         </paper-button>
-        <ht-spinner button hidden?=${!loading}></ht-spinner>
+        <ht-spinner button ?hidden=${!loading}></ht-spinner>
       </div>
     </div>`;
   }
@@ -68,14 +71,9 @@ class HTAccountSettingsNotifications extends LitElement {
 
   static get properties() {
     return {
-      data: Object,
-      loading: Boolean
+      data: { type: Object },
+      loading: { type: Boolean }
     };
-  }
-
-  set data(data) {
-    this.shadowRoot.querySelector("#monthDigest").checked =
-      data.notifications.monthDigest;
   }
 
   async _save() {

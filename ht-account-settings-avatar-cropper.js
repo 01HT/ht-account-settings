@@ -3,11 +3,12 @@ import { LitElement, html } from "@polymer/lit-element";
 import "@polymer/iron-iconset-svg";
 import "@polymer/iron-icon";
 import "@polymer/paper-button";
-import { cropperjsStyles } from "./cropperjs-styles";
-import Cropper from "/node_modules/cropperjs/dist/cropper.esm.js";
+import { cropperjsStyles } from "./cropperjs-styles.js";
+import Cropper from "cropperjs/dist/cropper.esm.js";
 
 class HTAccountSettingsAvatarCropper extends LitElement {
-  _render({ showCropper }) {
+  render() {
+    const { showCropper } = this;
     return html`
     ${cropperjsStyles}
     <style>
@@ -48,12 +49,12 @@ class HTAccountSettingsAvatarCropper extends LitElement {
     }
 
     #preview {
-       min-width: 128px;
-       min-height: 128px;
-        margin: 16px;
-       overflow: hidden;
-       border-radius: 50%;
-        background: #000;
+      min-width: 128px;
+      min-height: 128px;
+      margin: 16px;
+      overflow: hidden;
+      border-radius: 50%;
+      background: #000;
     }
 
     #show, #save {
@@ -75,18 +76,18 @@ class HTAccountSettingsAvatarCropper extends LitElement {
     </svg>
     </iron-iconset-svg>
     <div id="container">
-        <paper-button raised on-click=${_ => {
+        <paper-button raised @click=${_ => {
           this._openFileInput();
         }}>
         <iron-icon icon="ht-account-settings-avatar-cropper:cloud-upload"></iron-icon>Загрузить свой аватар</paper-button>
         <input type="file" accept="image/gif, image/tiff, image/jpeg, image/png, image/webp" style="visibility: hidden;" />
-        <div id="cropper" hidden?=${!showCropper}>
+        <div id="cropper" ?hidden=${!showCropper}>
             <div>
                 <img id="image">
             </div>
             <div id="preview-block">
                 <div id="preview"></div>
-                <paper-button id="save" raised on-click=${_ => {
+                <paper-button id="save" raised @click=${_ => {
                   this._save();
                 }}>Сохранить</paper-button>
             </div>
@@ -100,7 +101,7 @@ class HTAccountSettingsAvatarCropper extends LitElement {
 
   static get properties() {
     return {
-      showCropper: Boolean
+      showCropper: { type: Boolean }
     };
   }
 
@@ -118,7 +119,7 @@ class HTAccountSettingsAvatarCropper extends LitElement {
     return this.shadowRoot.querySelector("#image");
   }
 
-  _firstRendered() {
+  firstUpdated() {
     this.input.addEventListener("change", this._inputChanged.bind(this), false);
   }
 

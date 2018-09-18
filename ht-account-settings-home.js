@@ -5,8 +5,8 @@ import "@polymer/iron-iconset-svg";
 import "@polymer/iron-icon";
 
 class HTAccountSettingsHome extends LitElement {
-  _render({ data }) {
-    if (!data) return;
+  render() {
+    const { data } = this;
     let socialLogin = true;
     let providerId = firebase.auth().currentUser.providerId;
     if (providerId === "email") socialLogin = false;
@@ -133,11 +133,15 @@ class HTAccountSettingsHome extends LitElement {
     <div id="container">
         <div id="avatar">
             <a href="/account/avatar">
-                <ht-image image$="${cloudinaryURL}/c_scale,r_max,f_auto,h_256,w_256/${
-      data.photoURL
-    }.jpg" placeholder$="${cloudinaryURL}/c_scale,r_max,f_auto,h_32,w_32/${
-      data.photoURL
-    }.jpg">
+                <ht-image image="${
+                  window.cloudinaryURL
+                }/c_scale,r_max,f_auto,h_256,w_256/v${data.avatar.version}/${
+      data.avatar.public_id
+    }.${data.avatar.format}" placeholder="${
+      window.cloudinaryURL
+    }/c_scale,r_max,f_auto,h_64,w_64/v${data.avatar.version}/${
+      data.avatar.public_id
+    }.${data.avatar.format}">
                 </ht-image>
             </a>
         </div>
@@ -146,10 +150,10 @@ class HTAccountSettingsHome extends LitElement {
                 <iron-icon icon="ht-account-settings-home:lock"></iron-icon>Безопасность и вход</div>
             <!--<div class="description"></div>-->
             <div class="links">
-                <a href="/account/password" hidden?=${socialLogin}>Сменить пароль</a>
-                <div disabled hidden?=${!socialLogin}>Сменить пароль</div>
-                <a href="/account/email" hidden?=${socialLogin}>Сменить email</a>
-                <div disabled hidden?=${!socialLogin}>Сменить email</div>
+                <a href="/account/password" ?hidden=${socialLogin}>Сменить пароль</a>
+                <div disabled ?hidden=${!socialLogin}>Сменить пароль</div>
+                <a href="/account/email" ?hidden=${socialLogin}>Сменить email</a>
+                <div disabled ?hidden=${!socialLogin}>Сменить email</div>
             </div>
         </div>
         <div id="personal" class="item">
@@ -181,7 +185,7 @@ class HTAccountSettingsHome extends LitElement {
 
   static get properties() {
     return {
-      data: Object
+      data: { type: Object }
     };
   }
 }

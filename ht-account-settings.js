@@ -10,7 +10,9 @@ import "./ht-account-settings-privacy";
 import "./ht-account-settings-notifications";
 
 class HTAccountSettings extends LitElement {
-  _render({ userData, loading, page }) {
+  render() {
+    const { userData, loading, page, userId } = this;
+    if (this.userData === undefined) return html``;
     return html`
     <style>
     :host {
@@ -37,22 +39,22 @@ class HTAccountSettings extends LitElement {
     }
     </style>
     <div id="container">
-      <ht-spinner hidden?=${!loading} page></ht-spinner>
-      <div id="main" hidden?=${loading}>
-        <ht-account-settings-home active?=${page ===
-          "home"} data=${userData}></ht-account-settings-home>
-        <ht-account-settings-password active?=${page ===
-          "password"} data=${userData}></ht-account-settings-password>
-        <ht-account-settings-email active?=${page ===
-          "email"} data=${userData}></ht-account-settings-email>
-        <ht-account-settings-personal active?=${page ===
-          "personal"} data=${userData}></ht-account-settings-personal>
-        <ht-account-settings-avatar active?=${page ===
-          "avatar"} data=${userData}></ht-account-settings-avatar>
-        <ht-account-settings-privacy active?=${page ===
-          "privacy"} data=${userData}></ht-account-settings-privacy>
-        <ht-account-settings-notifications active?=${page ===
-          "notifications"} data=${userData}></ht-account-settings-notifications>
+      <ht-spinner ?hidden=${!loading} page></ht-spinner>
+      <div id="main" ?hidden=${loading}>
+        <ht-account-settings-home ?active=${page ===
+          "home"} .data=${userData}></ht-account-settings-home>
+        <ht-account-settings-password ?active=${page ===
+          "password"} .data=${userData}></ht-account-settings-password>
+        <ht-account-settings-email ?active=${page ===
+          "email"} .data=${userData}></ht-account-settings-email>
+        <ht-account-settings-personal ?active=${page ===
+          "personal"} .data=${userData}></ht-account-settings-personal>
+        <ht-account-settings-avatar ?active=${page ===
+          "avatar"} .data=${userData}></ht-account-settings-avatar>
+        <ht-account-settings-privacy ?active=${page ===
+          "privacy"} .data=${userData}></ht-account-settings-privacy>
+        <ht-account-settings-notifications ?active=${page ===
+          "notifications"} .data=${userData}></ht-account-settings-notifications>
       </div>
     </div>`;
   }
@@ -63,14 +65,14 @@ class HTAccountSettings extends LitElement {
 
   static get properties() {
     return {
-      userData: Object,
-      loading: Boolean,
-      page: String,
-      userId: String
+      userData: { type: Object },
+      loading: { type: Boolean },
+      page: { type: String },
+      userId: { type: String }
     };
   }
 
-  async update(userId, page) {
+  async updateData(userId, page) {
     try {
       if (this.userId === userId && this.page === page) return;
       this.userId = userId;
@@ -83,6 +85,7 @@ class HTAccountSettings extends LitElement {
         .get();
       const userData = snapshot.data();
       this.userData = userData;
+      console.log(this.userData);
       this.loading = false;
     } catch (error) {
       console.log("update: " + error.message);

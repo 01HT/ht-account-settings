@@ -10,7 +10,8 @@ import "./ht-account-settings-header";
 import "zxcvbn/dist/zxcvbn.js";
 
 class HTAccountSettingsPassword extends LitElement {
-  _render({ loading, strengthObj }) {
+  render() {
+    const { loading, strengthObj}
     return html`
     <style>
         :host {
@@ -92,26 +93,28 @@ class HTAccountSettingsPassword extends LitElement {
         <p>Выберите надежный пароль и не используйте его для других аккаунтов. Минимальная длина пароля – 8 символов. Не используйте пароли от других сайтов или варианты, которые злоумышленники смогут легко
         подобрать.
         <a href="https://support.google.com/accounts/answer/32040" target="_blank">Подробнее...</a></p>
-        <paper-input id="new" label="Новый пароль" minlength="8" auto-validate type="password" on-change=${_ => {
+        <paper-input id="new" label="Новый пароль" minlength="8" auto-validate type="password" @change=${_ => {
           this._passwordChanged();
-        }} on-keyup=${_ => {
+        }} @keyup=${_ => {
       this._passwordChanged();
     }}></paper-input>
-    <div id="strength" class="text">Надежность пароля: <span style$="color:${
+    <div id="strength" class="text">Надежность пароля: <span style="color:${
       strengthObj.color
     }">${strengthObj.name}</span></div>
-        <paper-input id="repeat" label="Подтвердите новый пароль" type="password" on-change=${_ => {
+        <paper-input id="repeat" label="Подтвердите новый пароль" type="password" @change=${_ => {
           this._checkRepeat();
-        }} on-keyup=${_ => {
+        }} @keyup=${_ => {
       this._checkRepeat();
     }}></paper-input>
         <paper-input id="current" label="Введите ваш действующий пароль" type="password"></paper-input>
         <div id="action">
-            <paper-button raised class="save" hidden?=${loading} on-click=${e => {
+            <paper-button raised class="save" ?hidden=${
+              loading
+            } @click=${e => {
       this._save();
     }}>Изменить пароль
             </paper-button>
-            <ht-spinner button hidden?=${!loading}></ht-spinner>
+            <ht-spinner button ?hidden=${!loading}></ht-spinner>
         </div>
     </div>`;
   }
@@ -122,8 +125,8 @@ class HTAccountSettingsPassword extends LitElement {
 
   static get properties() {
     return {
-      loading: Boolean,
-      strengthObj: String
+      loading: {type: Boolean},
+      strengthObj: {type: String}
     };
   }
 
