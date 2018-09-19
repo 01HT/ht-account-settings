@@ -11,7 +11,7 @@ import "zxcvbn/dist/zxcvbn.js";
 
 class HTAccountSettingsPassword extends LitElement {
   render() {
-    const { loading, strengthObj}
+    const { loading, strengthObj} = this;
     return html`
     <style>
         :host {
