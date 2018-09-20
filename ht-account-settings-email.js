@@ -75,8 +75,8 @@ class HTAccountSettingsEmail extends LitElement {
     };
   }
 
-  set data(userData) {
-    this.shadowRoot.querySelector("#current").value = userData.email;
+  updated() {
+    this.shadowRoot.querySelector("#current").value = this.data.email;
   }
 
   get email() {
