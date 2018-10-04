@@ -85,7 +85,6 @@ class HTAccountSettings extends LitElement {
         .get();
       const userData = snapshot.data();
       this.userData = userData;
-      console.log(this.userData);
       this.loading = false;
     } catch (error) {
       console.log("update: " + error.message);

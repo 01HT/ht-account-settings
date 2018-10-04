@@ -17,7 +17,11 @@ import {
 class HTAccountSettingsAvatar extends LitElement {
   render() {
     const { data, loading } = this;
-    let providerItems = firebase.auth().currentUser.providerData;
+    let providerItems = [];
+    let providers = firebase.auth().currentUser.providerData;
+    for (let provider of providers) {
+      if (provider.providerId !== "password") providerItems.push(provider);
+    }
     return html`
     <style>
     :host {

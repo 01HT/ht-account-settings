@@ -13,6 +13,7 @@ class HTAccountSettingsPersonal extends LitElement {
   render() {
     const { data, loading, emailVerified } = this;
     return html`
+    ${window.SharedStyles}
     <style>
         :host {
             display: block;
@@ -71,9 +72,9 @@ class HTAccountSettingsPersonal extends LitElement {
           <paper-input id="email" label="Адрес электронной почты" disabled value=${
             data.email
           }></paper-input>
-          <paper-button raised ?hidden=${emailVerified} @click=${_ => {
+          <!-- <paper-button raised ?hidden=${emailVerified} @click=${_ => {
       this._sendEmailVerification();
-    }}>Подтвердить email</paper-button>
+    }}>Подтвердить email</paper-button> -->
           <!--<paper-tooltip>Адрес электронной почты меняется автоматически при входе в систему.</paper-tooltip>-->
         </div>
         <paper-input id="displayName" label="Отображаемое имя" value=${

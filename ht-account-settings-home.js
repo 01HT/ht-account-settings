@@ -8,8 +8,9 @@ class HTAccountSettingsHome extends LitElement {
   render() {
     const { data } = this;
     let socialLogin = true;
-    let providerId = firebase.auth().currentUser.providerId;
-    if (providerId === "email") socialLogin = false;
+    let providerData = firebase.auth().currentUser.providerData;
+    if (providerData.length === 1 && providerData[0].providerId === "password")
+      socialLogin = false;
     return html`
     <style>
         :host {
@@ -152,8 +153,8 @@ class HTAccountSettingsHome extends LitElement {
             <div class="links">
                 <a href="/account/password" ?hidden=${socialLogin}>Сменить пароль</a>
                 <div disabled ?hidden=${!socialLogin}>Сменить пароль</div>
-                <a href="/account/email" ?hidden=${socialLogin}>Сменить email</a>
-                <div disabled ?hidden=${!socialLogin}>Сменить email</div>
+                <!-- <a href="/account/email" ?hidden=${socialLogin}>Сменить email</a>
+                <div disabled ?hidden=${!socialLogin}>Сменить email</div> -->
             </div>
         </div>
         <div id="personal" class="item">

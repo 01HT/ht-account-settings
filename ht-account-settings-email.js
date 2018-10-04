@@ -87,6 +87,11 @@ class HTAccountSettingsEmail extends LitElement {
     return this.shadowRoot.querySelector("#password");
   }
 
+  _reset() {
+    this.email.value = "";
+    this.password.value = "";
+  }
+
   async _changeEmail() {
     try {
       this.loading = true;
@@ -96,15 +101,19 @@ class HTAccountSettingsEmail extends LitElement {
       await user.updateEmail(email);
       await this._updateEmailField(email);
       this.loading = false;
+      this._reset();
       this.dispatchEvent(
         new CustomEvent("show-toast", {
           bubbles: true,
           composed: true,
           detail: {
-            text: "Сохранено"
+            text: "Адрес почты изменен"
           }
         })
       );
+      setTimeout(() => {
+        location.reload();
+      }, 3000);
     } catch (error) {
       this.loading = false;
       this.dispatchEvent(

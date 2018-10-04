@@ -11,7 +11,7 @@ import "zxcvbn/dist/zxcvbn.js";
 
 class HTAccountSettingsPassword extends LitElement {
   render() {
-    const { loading, strengthObj} = this;
+    const { loading, strengthObj } = this;
     return html`
     <style>
         :host {
@@ -93,9 +93,12 @@ class HTAccountSettingsPassword extends LitElement {
         <p>Выберите надежный пароль и не используйте его для других аккаунтов. Минимальная длина пароля – 8 символов. Не используйте пароли от других сайтов или варианты, которые злоумышленники смогут легко
         подобрать.
         <a href="https://support.google.com/accounts/answer/32040" target="_blank">Подробнее...</a></p>
-        <paper-input id="new" label="Новый пароль" minlength="8" auto-validate type="password" @change=${_ => {
-          this._passwordChanged();
-        }} @keyup=${_ => {
+        <paper-input id="new" label="Новый пароль" minlength="8" ?invalid=${strengthObj.name ===
+          "Очень слабый" ||
+          strengthObj.name ===
+            "Слабый"} auto-validate type="password" @change=${_ => {
+      this._passwordChanged();
+    }} @keyup=${_ => {
       this._passwordChanged();
     }}></paper-input>
     <div id="strength" class="text">Надежность пароля: <span style="color:${
@@ -106,11 +109,9 @@ class HTAccountSettingsPassword extends LitElement {
         }} @keyup=${_ => {
       this._checkRepeat();
     }}></paper-input>
-        <paper-input id="current" label="Введите ваш действующий пароль" type="password"></paper-input>
+        <paper-input id="current" label="Введите ваш текущий пароль" type="password"></paper-input>
         <div id="action">
-            <paper-button raised class="save" ?hidden=${
-              loading
-            } @click=${e => {
+            <paper-button raised class="save" ?hidden=${loading} @click=${e => {
       this._save();
     }}>Изменить пароль
             </paper-button>
@@ -125,8 +126,8 @@ class HTAccountSettingsPassword extends LitElement {
 
   static get properties() {
     return {
-      loading: {type: Boolean},
-      strengthObj: {type: String}
+      loading: { type: Boolean },
+      strengthObj: { type: String }
     };
   }
 
@@ -155,6 +156,13 @@ class HTAccountSettingsPassword extends LitElement {
     return this.shadowRoot.querySelector("#current");
   }
 
+  _reset() {
+    this.newInput.value = "";
+    this.repeatInput.value = "";
+    this.currentInput.value = "";
+    this.strengthObj = { name: "-", color: "inherit" };
+  }
+
   _passwordChanged() {
     let password = this.newInput.value;
     let strengthValue = "empty";
@@ -180,11 +188,53 @@ class HTAccountSettingsPassword extends LitElement {
 
   async _save() {
     try {
+      if (this.newInput.value.length < 8) {
+        this.dispatchEvent(
+          new CustomEvent("show-toast", {
+            bubbles: true,
+            composed: true,
+            detail: {
+              text: `Минимальная длина пароля – 8 символов, у вас только ${
+                this.newInput.value.length
+              }`
+            }
+          })
+        );
+        return;
+      }
+      if (this.newInput.getAttribute("invalid") === "") {
+        this.dispatchEvent(
+          new CustomEvent("show-toast", {
+            bubbles: true,
+            composed: true,
+            detail: {
+              text: "Новый пароль не безопасен"
+            }
+          })
+        );
+        return;
+      }
+      if (
+        this.repeatInput.getAttribute("invalid") === "" ||
+        this.newInput.value !== this.repeatInput.value
+      ) {
+        this.dispatchEvent(
+          new CustomEvent("show-toast", {
+            bubbles: true,
+            composed: true,
+            detail: {
+              text: "Пароли не совпадают"
+            }
+          })
+        );
+        return;
+      }
       this.loading = true;
       let user = firebase.auth().currentUser;
       await this._reauthenticate(this.currentInput.value);
       await user.updatePassword(this.newInput.value);
       this.loading = false;
+      this._reset();
       this.dispatchEvent(
         new CustomEvent("show-toast", {
           bubbles: true,
@@ -200,12 +250,11 @@ class HTAccountSettingsPassword extends LitElement {
           bubbles: true,
           composed: true,
           detail: {
-            text: error.message
+            text: "Неверный текущий пароль"
           }
         })
       );
       this.loading = false;
-      throw new Error("_save: " + error.message);
     }
   }
 
