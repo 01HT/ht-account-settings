@@ -3,6 +3,7 @@ import { LitElement, html } from "@polymer/lit-element";
 import "@01ht/ht-image";
 import "@polymer/iron-iconset-svg";
 import "@polymer/iron-icon";
+import "@01ht/ht-page-header";
 
 class HTAccountSettingsHome extends LitElement {
   render() {
@@ -12,16 +13,13 @@ class HTAccountSettingsHome extends LitElement {
     if (providerData.length === 1 && providerData[0].providerId === "password")
       socialLogin = false;
     return html`
+    ${SharedStyles}
     <style>
-        :host {
+        a {
             display: block;
-            position: relative;
-            box-sizing: border-box;
         }
 
-        a {
-            color: #2962ff;
-            display: block;
+        a:hover {
             text-decoration: none;
         }
     
@@ -34,7 +32,7 @@ class HTAccountSettingsHome extends LitElement {
     
         #container {
             display: grid;
-            grid-gap: 32px;
+            grid-gap: 16px;
             grid-template-columns: auto auto auto;
             margin-top:32px;
         }
@@ -43,7 +41,7 @@ class HTAccountSettingsHome extends LitElement {
             grid-column: 1 / 4;
         }    
     
-        #avatar>a {
+        #avatar > a {
             display: block;
             margin: auto;
             width: 128px;
@@ -61,7 +59,7 @@ class HTAccountSettingsHome extends LitElement {
         }
     
         .title {
-            color: var(--secondary-text-color);
+            color: #414549;
             font-size: 20px;
             display: flex;
             min-height: 32px;
@@ -79,7 +77,6 @@ class HTAccountSettingsHome extends LitElement {
         }
 
         .links > * {
-            font-size: 15px;
             margin: 8px 0;
         }
 
@@ -88,7 +85,7 @@ class HTAccountSettingsHome extends LitElement {
             color:#ccc;
         }
 
-        @media (max-width:900px) {
+        @media (max-width:1040px) {
             #container {
                 grid-template-columns: auto auto;
             }
@@ -111,10 +108,6 @@ class HTAccountSettingsHome extends LitElement {
                 grid-column: 1;
             }
         }
-    
-        [hidden] {
-            display: none;
-        }
     </style>
     <iron-iconset-svg size="24" name="ht-account-settings-home">
         <svg>
@@ -131,6 +124,7 @@ class HTAccountSettingsHome extends LitElement {
             </defs>
         </svg>
     </iron-iconset-svg>
+    <ht-page-header text="Аккаунт 01HT"></ht-page-header>
     <div id="container">
         <div id="avatar">
             <a href="/account/avatar">
@@ -162,7 +156,7 @@ class HTAccountSettingsHome extends LitElement {
                 <iron-icon icon="ht-account-settings-home:account-circle"></iron-icon>Конфиденциальность</div>
             <!--<div class="description"></div>-->
             <div class="links">
-                <a href="/account/personal">Ваша личная информация</a>
+                <a href="/account/personal">Личная информация</a>
                 <a href="/account/avatar">Сменить аватар</a>
                 <a href="/account/privacy">Настройки конфиденциальности</a>
             </div>

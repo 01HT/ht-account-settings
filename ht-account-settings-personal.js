@@ -7,13 +7,13 @@ import "@polymer/paper-tooltip";
 import "@polymer/paper-input/paper-input.js";
 import "@01ht/ht-spinner";
 import "@01ht/ht-wysiwyg";
-import "./ht-account-settings-header";
+import "@01ht/ht-page-header";
 
 class HTAccountSettingsPersonal extends LitElement {
   render() {
     const { data, loading, emailVerified } = this;
     return html`
-    ${window.SharedStyles}
+    ${SharedStyles}
     <style>
         :host {
             display: block;
@@ -25,13 +25,6 @@ class HTAccountSettingsPersonal extends LitElement {
             font-size: 14px;
             font-weight: 500;
             color: var(--secondary-text-color);
-        }
-    
-        paper-button {
-            background: var(--accent-color);
-            color: #fff;
-            margin: 0;
-            padding: 8px 16px;
         }
 
         paper-input {
@@ -67,14 +60,14 @@ class HTAccountSettingsPersonal extends LitElement {
         }
     </style>
     <div id="container">
-        <ht-account-settings-header text="Личная информация"></ht-account-settings-header>
+        <ht-page-header text="Личная информация" backURL="/account"></ht-page-header>
         <div id="email-container">
           <paper-input id="email" label="Адрес электронной почты" disabled value=${
             data.email
           }></paper-input>
-          <!-- <paper-button raised ?hidden=${emailVerified} @click=${_ => {
+         <paper-button raised ?hidden=${emailVerified} @click=${_ => {
       this._sendEmailVerification();
-    }}>Подтвердить email</paper-button> -->
+    }}>Подтвердить email</paper-button>
           <!--<paper-tooltip>Адрес электронной почты меняется автоматически при входе в систему.</paper-tooltip>-->
         </div>
         <paper-input id="displayName" label="Отображаемое имя" value=${

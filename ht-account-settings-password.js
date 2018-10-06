@@ -6,42 +6,15 @@ import "@polymer/paper-icon-button";
 import "@polymer/iron-iconset-svg";
 import "@polymer/iron-icon";
 import "@01ht/ht-spinner";
-import "./ht-account-settings-header";
+import "@01ht/ht-page-header";
 import "zxcvbn/dist/zxcvbn.js";
 
 class HTAccountSettingsPassword extends LitElement {
   render() {
     const { loading, strengthObj } = this;
     return html`
+    ${window.SharedStyles}
     <style>
-        :host {
-            display: block;
-            position: relative;
-            box-sizing: border-box;
-        }
-
-        a {
-            text-decoration:none;
-            color: #2962ff;
-        }
-
-        a:hover {
-            text-decoration:underline;
-        }
-    
-        h4 {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--secondary-text-color);
-        }
-    
-        paper-button {
-            background: var(--accent-color);
-            color: #fff;
-            margin: 0;
-            padding: 8px 16px;
-        }
-    
         paper-input {
             max-width: 300px;
         }
@@ -51,10 +24,6 @@ class HTAccountSettingsPassword extends LitElement {
             flex-direction: column;
             max-width: 600px;
             margin: auto;
-        }
-
-        p, .text {
-            font-size: 16px;
         }
 
         span {
@@ -71,10 +40,6 @@ class HTAccountSettingsPassword extends LitElement {
             display: flex;
             justify-content: flex-end;
         }
-    
-        [hidden] {
-            display: none
-        }
     </style>
     <iron-iconset-svg size="24" name="ht-account-settings-password">
     <svg>
@@ -89,7 +54,7 @@ class HTAccountSettingsPassword extends LitElement {
     </svg>
     </iron-iconset-svg>
     <div id="container">
-        <ht-account-settings-header text="Смена пароля"></ht-account-settings-header>
+        <ht-page-header text="Смена пароля" backURL="/account"></ht-page-header>
         <p>Выберите надежный пароль и не используйте его для других аккаунтов. Минимальная длина пароля – 8 символов. Не используйте пароли от других сайтов или варианты, которые злоумышленники смогут легко
         подобрать.
         <a href="https://support.google.com/accounts/answer/32040" target="_blank">Подробнее...</a></p>
@@ -194,7 +159,7 @@ class HTAccountSettingsPassword extends LitElement {
             bubbles: true,
             composed: true,
             detail: {
-              text: `Минимальная длина пароля – 8 символов, у вас только ${
+              text: `Минимальная длина пароля – 8 символов, в вашем их ${
                 this.newInput.value.length
               }`
             }

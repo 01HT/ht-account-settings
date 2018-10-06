@@ -10,60 +10,40 @@ class HTAccountSettingsAvatarCropper extends LitElement {
   render() {
     const { showCropper } = this;
     return html`
+    ${SharedStyles}
     ${cropperjsStyles}
     <style>
-    :host {
-        display: block;
-        position: relative;
-        box-sizing: border-box;
-    }
-
     img {
         max-width: 100%;
-    }
-
-    paper-button {
-        padding:8px 16px;
-        margin: 0;
-    }
-
-    paper-button iron-icon {
-        color:var(--secondary-text-color);
-        margin-right:8px;
     }
 
     #cropper {
         display: flex;
         position: relative;
-        width: 100%;
-        height: 300px;
-        max-height: 300px;
+        flex-wrap: wrap;
         margin-top:16px;
     }
 
+    #crop-region {
+      max-width: 500px;
+      height: 300px;
+    }
+
     #preview-block {
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        justify-content:center;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
     }
 
     #preview {
       min-width: 128px;
       min-height: 128px;
-      margin: 16px;
+      margin: 32px;
       overflow: hidden;
+      border: 1px solid #ddd;
       border-radius: 50%;
-      background: #000;
-    }
-
-    #show, #save {
-        background:var(--accent-color);
-        color:#fff;
-    }
-
-    [hidden], #cropper[hidden] {
-        display:none;
+      background: #fff;
     }
     </style>
     <iron-iconset-svg size="24" name="ht-account-settings-avatar-cropper">
@@ -82,7 +62,7 @@ class HTAccountSettingsAvatarCropper extends LitElement {
         <iron-icon icon="ht-account-settings-avatar-cropper:cloud-upload"></iron-icon>Загрузить свой аватар</paper-button>
         <input type="file" accept="image/gif, image/tiff, image/jpeg, image/png, image/webp" style="visibility: hidden;" />
         <div id="cropper" ?hidden=${!showCropper}>
-            <div>
+            <div id="crop-region">
                 <img id="image">
             </div>
             <div id="preview-block">

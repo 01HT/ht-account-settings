@@ -17,6 +17,7 @@
     "@01ht/ht-image": "01ht/ht-image",
     "@01ht/ht-wysiwyg": "01ht/ht-wysiwyg",
     "@01ht/ht-spinner": "01ht/ht-spinner",
+    "@01ht/ht-page-header": "01ht/ht-page-header",
     "@01ht/ht-client-helper-functions": "01ht/ht-client-helper-functions",
     "zxcvbn": "4.4.2",
     "cropperjs": "1.4.0"

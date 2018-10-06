@@ -7,6 +7,7 @@ import "@polymer/paper-button";
 import "@polymer/paper-icon-button";
 import "@01ht/ht-image";
 import "@01ht/ht-spinner";
+import "@01ht/ht-page-header";
 import "./ht-account-settings-avatar-cropper";
 
 import {
@@ -23,13 +24,8 @@ class HTAccountSettingsAvatar extends LitElement {
       if (provider.providerId !== "password") providerItems.push(provider);
     }
     return html`
+    ${window.SharedStyles}
     <style>
-    :host {
-        display: block;
-        position: relative;
-        box-sizing: border-box;
-    }
-
     a {
       color:inherit;
     }
@@ -41,11 +37,6 @@ class HTAccountSettingsAvatar extends LitElement {
       overflow:hidden;
     }
 
-    paper-button {
-      margin:0;
-      padding:8px 16px;
-    }
-
     paper-button iron-icon {
       margin-right: 8px;
     }
@@ -55,7 +46,8 @@ class HTAccountSettingsAvatar extends LitElement {
     }
 
     #container {
-      width: 800px;
+      max-width: 800px;
+      width:100%;
       margin:auto;
       display:flex;
       flex-direction:column;
@@ -109,7 +101,7 @@ class HTAccountSettingsAvatar extends LitElement {
       display:flex;
       flex-direction:column;
       margin: 0 16px 16px 0;
-      width:128px;
+      width: 140px;
     }
 
     #sync img {
@@ -119,6 +111,12 @@ class HTAccountSettingsAvatar extends LitElement {
       border: 1px solid #fff;
       margin: 8px 0 16px 0;
       background:#fff;
+    }
+
+    .social {
+      background: #fff;
+      color:#757575;
+      padding: 8px;
     }
 
     [provider="google.com"] {
@@ -161,13 +159,8 @@ class HTAccountSettingsAvatar extends LitElement {
         </svg>
     </iron-iconset-svg>
     <div id="container">
+        <ht-page-header text="Сменить аватар" backURL="/account"></ht-page-header>
         <div id="settings">
-            <div id="header">
-              <a href="/account">
-                <paper-icon-button icon="ht-account-settings-avatar:arrow-back"></paper-icon-button>
-              </a>
-              <h1>Сменить аватар</h1>
-            </div>
             <div id="preview">
             <ht-image image="${
               window.cloudinaryURL
@@ -179,14 +172,14 @@ class HTAccountSettingsAvatar extends LitElement {
       data.avatar.public_id
     }.${data.avatar.format}"></ht-image>
             </div>
-            <div id="sync" ?hidden=${
-              providerItems && providerItems.length === 0 ? true : false
-            }>
+            <div id="sync">
                 <div id="sync-list">
                 ${repeat(
                   providerItems,
                   item =>
-                    html`<paper-button raised provider="${
+                    html`<paper-button ?hidden=${
+                      providerItems && providerItems.length === 0 ? true : false
+                    } class="social" raised provider="${
                       item.providerId
                     }" @click=${e => {
                       this._syncSocial(e);
@@ -200,7 +193,7 @@ class HTAccountSettingsAvatar extends LitElement {
                       ""
                     )}</div></paper-button>`
                 )}
-                <paper-button raised @click=${_ => {
+                <paper-button class="social" raised @click=${_ => {
                   this._setDefaultAvatar();
                 }}><div><img src="${cloudinaryURL}/image/upload/users/default.svg"></div><div>Стандартный</div>
                 </paper-button>

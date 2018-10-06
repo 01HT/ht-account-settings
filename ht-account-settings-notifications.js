@@ -2,26 +2,14 @@
 import { LitElement, html } from "@polymer/lit-element";
 import "@polymer/paper-toggle-button";
 import "@01ht/ht-spinner";
-import "./ht-account-settings-header";
+import "@01ht/ht-page-header";
 
 class HTAccountSettingsNotifications extends LitElement {
   render() {
     const { data, loading } = this;
     return html`
+    ${SharedStyles}
     <style>
-      :host {
-        display: block;
-        position: relative;
-        box-sizing: border-box;
-      }
-    
-      paper-button {
-        background: var(--accent-color);
-        color: #fff;
-        margin: 0;
-        padding: 8px 16px;
-      }
-    
       ht-account-settings-header {
         margin-bottom: 16px;
       }
@@ -43,13 +31,9 @@ class HTAccountSettingsNotifications extends LitElement {
         display: flex;
         margin-bottom: 16px;
       }
-    
-      [hidden] {
-        display: none
-      }
     </style>
     <div id="container">
-      <ht-account-settings-header text="Настройки уведомлений"></ht-account-settings-header>
+      <ht-page-header text="Настройки уведомлений" backURL="/account"></ht-page-header>
       <div class="toggle-container">
         <paper-toggle-button id="monthDigest" .checked=${
           data.notifications.monthDigest

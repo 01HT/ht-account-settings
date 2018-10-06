@@ -3,7 +3,7 @@ import { LitElement, html } from "@polymer/lit-element";
 import "@polymer/paper-button";
 import "@polymer/paper-input/paper-input.js";
 import "@01ht/ht-spinner";
-import "./ht-account-settings-header";
+import "@01ht/ht-page-header";
 
 class HTAccountSettingsEmail extends LitElement {
   render() {
@@ -49,7 +49,7 @@ class HTAccountSettingsEmail extends LitElement {
         }
     </style>
     <div id="container">
-        <ht-account-settings-header text="Смена email"></ht-account-settings-header>
+        <ht-page-header text="Смена email" backURL="/account"></ht-page-header>
         <p>Указанный email будет использоваться как логин для входа.</p>
         <paper-input id="current" label="Текущий email" disabled></paper-input>
         <paper-input id="email" label="Новый email"></paper-input>

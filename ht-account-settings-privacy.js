@@ -2,26 +2,14 @@
 import { LitElement, html } from "@polymer/lit-element";
 import "@polymer/paper-toggle-button";
 import "@01ht/ht-spinner";
-import "./ht-account-settings-header";
+import "@01ht/ht-page-header";
 
 class HTAccountSettingsPrivacy extends LitElement {
   render() {
     const { data, loading } = this;
     return html`
+    ${SharedStyles}
     <style>
-      :host {
-        display: block;
-        position: relative;
-        box-sizing: border-box;
-      }
-
-      paper-button {
-        background: var(--accent-color);
-        color: #fff;
-        margin: 0;
-        padding: 8px 16px;
-      }
-    
       paper-spinner {
         width: 32px;
         height: 32px;
@@ -36,7 +24,7 @@ class HTAccountSettingsPrivacy extends LitElement {
       #container {
         display: flex;
         flex-direction: column;
-        max-width: 600px;
+        max-width: 800px;
         margin: auto;
       }
     
@@ -50,13 +38,9 @@ class HTAccountSettingsPrivacy extends LitElement {
         display: flex;
         margin-bottom: 16px;
       }
-    
-      [hidden] {
-        display: none
-      }
     </style>
     <div id="container">
-      <ht-account-settings-header text="Настройки конфиденциальности"></ht-account-settings-header>
+      <ht-page-header text="Настройки конфиденциальности" backURL="/account"></ht-page-header>
       <div class="toggle-container">
         <paper-toggle-button id="fullName" .checked=${
           data.privacy.fullName
