@@ -183,8 +183,8 @@ class HTAccountSettingsHome extends LitElement {
             <div class="links">
                 <a href="/account/password" ?hidden=${socialLogin}>Сменить пароль</a>
                 <div disabled ?hidden=${!socialLogin}>Сменить пароль</div>
-                <!-- <a href="/account/email" ?hidden=${socialLogin}>Сменить email</a>
-                <div disabled ?hidden=${!socialLogin}>Сменить email</div> -->
+                <a href="/account/email">Сменить email</a>
+                <!-- <div disabled>Сменить email</div> -->
             </div>
         </div>
         <div id="personal" class="item">

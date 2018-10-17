@@ -113,6 +113,11 @@ class HTAccountSettingsAvatar extends LitElement {
       background:#fff;
     }
 
+    .social-button-title {
+      display:flex;
+      align-items:center;
+    }
+
     .social {
       background: #fff;
       color:#757575;
@@ -185,7 +190,7 @@ class HTAccountSettingsAvatar extends LitElement {
                       this._syncSocial(e);
                     }}><div><img src="${
                       item.photoURL
-                    }"></div><div><iron-icon src="${cloudinaryURL}/image/upload/logos/${item.providerId.replace(
+                    }"></div><div class="social-button-title"><iron-icon src="${cloudinaryURL}/image/upload/logos/${item.providerId.replace(
                       ".com",
                       ""
                     )}/logo.svg"></iron-icon>${item.providerId.replace(
