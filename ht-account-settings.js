@@ -8,6 +8,7 @@ import "./ht-account-settings-personal";
 import "./ht-account-settings-avatar";
 import "./ht-account-settings-privacy";
 import "./ht-account-settings-notifications";
+import "./ht-account-settings-payout";
 
 class HTAccountSettings extends LitElement {
   render() {
@@ -55,6 +56,9 @@ class HTAccountSettings extends LitElement {
           "privacy"} .data=${userData}></ht-account-settings-privacy>
         <ht-account-settings-notifications ?active=${page ===
           "notifications"} .data=${userData}></ht-account-settings-notifications>
+        <ht-account-settings-payout ?active=${page === "payout"} .data=${
+      userData.payoutData
+    }></ht-account-settings-payout>
       </div>
     </div>`;
   }

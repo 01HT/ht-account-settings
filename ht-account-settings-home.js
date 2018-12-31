@@ -1,9 +1,9 @@
 "use strict";
 import { LitElement, html } from "@polymer/lit-element";
-import "@01ht/ht-image";
 import "@polymer/iron-iconset-svg";
 import "@polymer/iron-icon";
 import "@01ht/ht-page-header";
+import "@01ht/ht-image";
 
 class HTAccountSettingsHome extends LitElement {
   render() {
@@ -203,8 +203,8 @@ class HTAccountSettingsHome extends LitElement {
             <!--<div class="description"></div>-->
             <div class="links">
                 <a href="/account/notifications">Настройка уведомлений</a>
-                <a href="/payments">Платежи</a>
-                <a href="/purchases">Покупки</a>
+                <a href="/account/payout" ?disabled=${!data.isAuthor}>Настройки выплат</a>
+                <a href="/my-orders">Заказы</a>
             </div>
         </div>
     </div>`;
