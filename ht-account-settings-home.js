@@ -203,7 +203,8 @@ class HTAccountSettingsHome extends LitElement {
             <!--<div class="description"></div>-->
             <div class="links">
                 <a href="/account/notifications">Настройка уведомлений</a>
-                <a href="/account/payout" ?disabled=${!data.isAuthor}>Настройки выплат</a>
+                <a href="/account/payout" ?hidden=${!data.isAuthor}>Настройки выплат</a>
+                <div disabled ?hidden=${data.isAuthor}>Настройки выплат</div>
                 <a href="/my-orders">Заказы</a>
             </div>
         </div>
