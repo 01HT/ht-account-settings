@@ -16,27 +16,50 @@ class HTAccountSettingsPersonal extends LitElement {
     ${SharedStyles}
     <style>
         :host {
-            display: block;
-            position: relative;
-            box-sizing: border-box;
+          display: block;
+          position: relative;
+          box-sizing: border-box;
         }
     
         h4 {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--secondary-text-color);
+          font-size: 14px;
+          font-weight: 500;
+          color: var(--secondary-text-color);
         }
 
         paper-input {
-            max-width:400px;
-            width:100%;
+          max-width:400px;
+          width:100%;
         }
     
         #container {
-            display:flex;
-            flex-direction: column;
-            max-width:600px;
-            margin:auto;
+          display:flex;
+          flex-direction: column;
+          max-width:600px;
+          margin:auto;
+        }
+        
+        #nameInURLContainer {
+          display:flex;
+          align-items:center;
+          position:relative;
+          max-width: 400px;
+        }
+
+        #nameInURL {
+          margin-right: 32px;
+        }
+
+        .warning {
+          color: var(--accent-color);
+          position: absolute;
+          top: 28px;
+          height: 24px;
+          right:0;
+          bottom:0;
+          left:0;
+          display:flex;
+          justify-content:flex-end;
         }
 
         #email-container {
@@ -50,15 +73,22 @@ class HTAccountSettingsPersonal extends LitElement {
         }
     
         #action {
-            margin: 16px 0;
-            display: flex;
-            justify-content: flex-end;
+          margin: 16px 0;
+          display: flex;
+          justify-content: flex-end;
         }
 
         [hidden] {
             display:none
         }
     </style>
+    <iron-iconset-svg size="24" name="ht-account-settings-personal">
+      <svg>
+        <defs>
+            <g id="warning"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"></path></g>   
+        </defs>
+      </svg>
+    </iron-iconset-svg>
     <div id="container">
         <ht-page-header text="Личная информация" backURL="/account"></ht-page-header>
         <div id="email-container">
@@ -70,9 +100,23 @@ class HTAccountSettingsPersonal extends LitElement {
     }}>Подтвердить email</paper-button>
           <!--<paper-tooltip>Адрес электронной почты меняется автоматически при входе в систему.</paper-tooltip>-->
         </div>
-        <paper-input id="displayName" label="Отображаемое имя" value=${
+        <paper-input id="displayName" label="Отображаемое имя" auto-validate allowed-pattern="^[0-9a-z\-]+$" value=${
           data.displayName
         }></paper-input>
+        <div id="nameInURLContainer">
+          <div class="warning">
+              <iron-icon icon="ht-account-settings-personal:warning"></iron-icon>
+              <paper-tooltip>
+              Изменение влечет за собой изменение всех ссылок в которых задействован данный параметр. Существующие ссылки в интернете с параметром, станут недоступными и будут выдавать ошибку 404. Поисковым системам потребуется время для повторного индексирования ссылок и размещения информации в поисковой выдаче. Соответственно частое изменение данного параметра крайне не рекомендуется.
+            </paper-tooltip>
+          </div>
+          <paper-input id="nameInURL" label="Имя в URL" placeholder="my-nickname" allowed-pattern="^[0-9a-z\-]+$" auto-validate maxlength="30" value=${
+            data.nameInURL
+          }>
+          <div slot="prefix">/user/</div>
+          <div slot="suffix">/${data.userNumber}</div>
+        </paper-input>
+        </div>
         <paper-input id="lastName" label="Фамилия" value=${
           data.lastName
         }></paper-input>
@@ -166,8 +210,36 @@ class HTAccountSettingsPersonal extends LitElement {
       this.loading = true;
       let updates = {};
       updates.displayName = this.shadowRoot.querySelector("#displayName").value;
+      this.shadowRoot.querySelector("#displayName").removeAttribute("invalid");
       if (updates.displayName === "") {
-        alert("Отображаемое имя не может быть пустым");
+        this.shadowRoot
+          .querySelector("#displayName")
+          .setAttribute("invalid", "");
+        this.dispatchEvent(
+          new CustomEvent("show-toast", {
+            bubbles: true,
+            composed: true,
+            detail: {
+              text: "Отображаемое имя не может быть пустым"
+            }
+          })
+        );
+        this.loading = false;
+        return;
+      }
+      updates.nameInURL = this.shadowRoot.querySelector("#nameInURL").value;
+      this.shadowRoot.querySelector("#nameInURL").removeAttribute("invalid");
+      if (updates.nameInURL === "") {
+        this.shadowRoot.querySelector("#nameInURL").setAttribute("invalid", "");
+        this.dispatchEvent(
+          new CustomEvent("show-toast", {
+            bubbles: true,
+            composed: true,
+            detail: {
+              text: "Имя в URL не может быть пустым"
+            }
+          })
+        );
         this.loading = false;
         return;
       }
