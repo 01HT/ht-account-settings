@@ -116,7 +116,7 @@ class HTAccountSettingsPayout extends LitElement {
         <ht-page-header text="Настройки выплат" backURL="/account"></ht-page-header>
         <div class="card">
           <div class="section">
-            <div class="mini-title">Выберите ваш статус (<a href="/">подробнее</a>)</div>
+            <div class="mini-title">Выберите ваш статус (<a href="https://docs.elements.01.ht/guide/payout/#наnоги-и-страховые-взносы" target="_blank" rel="noopener">подробнее</a>)</div>
             <ht-account-settings-payout-legal-changer .legalType=${legalType}></ht-account-settings-payout-legal-changer>
             <!-- Individual -->
             ${
@@ -169,7 +169,7 @@ class HTAccountSettingsPayout extends LitElement {
           </div>
           <div class="separator"></div>
           <div class="section">
-            <div class="mini-title">Выберите способ выплаты (<a href="/">подробнее</a>)</div>
+            <div class="mini-title">Выберите способ выплаты (<a href="https://docs.elements.01.ht/guide/payout/#способ-выпnаты" target="_blank" rel="noopener">подробнее</a>)</div>
             <ht-account-settings-payout-changer .payoutType=${payoutType}></ht-account-settings-payout-changer>
             ${
               payoutType === "bank_card"
