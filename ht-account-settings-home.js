@@ -174,7 +174,9 @@ class HTAccountSettingsHome extends LitElement {
                 </ht-image>
                 <div><iron-icon icon="ht-account-settings-home:photo-camera"></iron-icon></div>
             </a>
-            <div><a href="/user/${data.uid}">${data.displayName}</a></div>
+            <div><a href="/user/${data.nameInURL}/${data.userNumber}">${
+      data.displayName
+    }</a></div>
         </div>
         <div id="security" class="item">
             <div class="title">
@@ -203,9 +205,10 @@ class HTAccountSettingsHome extends LitElement {
             <!--<div class="description"></div>-->
             <div class="links">
                 <a href="/account/notifications">Настройка уведомлений</a>
+                <a href="/account/contract" ?hidden=${!data.isAuthor}>Настройки договора</a>
+                <div disabled ?hidden=${data.isAuthor}>Настройки договора</div>
                 <a href="/account/payout" ?hidden=${!data.isAuthor}>Настройки выплат</a>
                 <div disabled ?hidden=${data.isAuthor}>Настройки выплат</div>
-                <a href="/my-orders">Заказы</a>
             </div>
         </div>
     </div>`;
