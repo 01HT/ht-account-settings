@@ -1,6 +1,8 @@
 "use strict";
 import { LitElement, html } from "@polymer/lit-element";
 import "@polymer/paper-input/paper-input.js";
+import "@polymer/paper-radio-button/paper-radio-button.js";
+import "@polymer/paper-radio-group/paper-radio-group.js";
 import "@01ht/ht-spinner";
 import "@01ht/ht-date";
 import "@01ht/ht-page-header";
@@ -121,6 +123,20 @@ class HTAccountSettingsContract extends LitElement {
         background: none;
       }
 
+      paper-radio-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      paper-radio-button {
+        --paper-radio-button-checked-color: var(--accent-color);
+      }
+
+      paper-radio-button span {
+        color: var(--secondary-text-color);
+        line-height: 24px;
+      }
+
       [hidden] {
         display:none
       }
@@ -200,10 +216,21 @@ class HTAccountSettingsContract extends LitElement {
                     ""}></paper-input>
                   <paper-input class="passportAddress" label="Адрес регистрации" value=${data.passportAddress ||
                     ""}></paper-input>
-                  <div class="mini-title pasport">Для не граждан РФ</div>
-                  <p>Для заключения договора необходимы данные паспорта иностранного гражданина либо иного документа, установленного федеральным законодательством или признаваемого в соответствии с международным договором РФ в качестве документа, удостоверяющего личность иностранного гражданина.</p>
+                  <div class="mini-title pasport">Для иностранных граждан</div>
+                  
+                  <p>Для заключения договора необходимы данные паспорта иностранного гражданина либо иного документа, установленного федеральным законодательством или признаваемого в соответствии с международным договором РФ в качестве документа, удостоверяющего личность иностранного гражданина. (к примеру вид на жительство, разрешение на временное проживание в РФ, удостоверение беженца, свидетельство о предоставлении временного убежища и др.)</p>
+                  
                   <paper-input class="identificationDocumentData" always-float-label label="Данные документа удостоверяющего личность" placeholder="Пример: Паспорт гражданина Украины, МЕ 800808, выдан 08.08.2008" value=${data.identificationDocumentData ||
                     ""}></paper-input>
+
+                  <div class="mini-title pasport">Статус иностранного гражданина</div>
+                  <paper-radio-group class="foreignCitizenStatus" allow-empty-selection selected=${data.foreignCitizenStatus ||
+                    ""}>
+                    <paper-radio-button name="resident-outside-rf">Постоянно проживающий за пределами РФ<br><span>взносы не начисляются</span></paper-radio-button>
+                    <paper-radio-button name="permanently-residing-rf">Постоянно проживающий в РФ<br><span>начисляются взносы в ПФР, ФФОМС</span></paper-radio-button>
+                    <paper-radio-button name="temporarily-residing-rf">Временно проживающий на территории РФ или временно пребывающий гражданин страны - члена ЕАЭС<br><span>начисляются взносы в ПФР, ФФОМС</paper-radio-button>
+                    <paper-radio-button name="temporarily-staying-rf">Временно пребывающий на территории РФ<br><span>начисляются взносы в ПФР</paper-radio-button>
+                  </paper-radio-group>
                   <!-- <div class="sub-title">Данные паспорта или другого документа(к примеру аналог СНИЛС, ИНН, в вашей стране), служащего для удостоверения личности</div> -->
                   <!-- <paper-input class="identificationDocumentData" always-float-label label="Данные документа удостоверяющего личность" placeholder="Пример: Social Security number(SSN)(USA): 000-00-0000" value=""></paper-input> -->
                   <!-- <div class="notify">Данные должны включать наименование документа.</div> -->
@@ -429,7 +456,10 @@ class HTAccountSettingsContract extends LitElement {
         ).value,
         identificationDocumentData: this.shadowRoot.querySelector(
           "#resident .identificationDocumentData"
-        ).value
+        ).value,
+        foreignCitizenStatus: this.shadowRoot.querySelector(
+          "#resident .foreignCitizenStatus"
+        ).selected
       };
       if (contractData.fullName === "")
         throw new Error("ФИО обязательно к заполнению");
