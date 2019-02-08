@@ -1,20 +1,14 @@
 "use strict";
-import { LitElement, html } from "@polymer/lit-element";
+import { LitElement, html, css } from "lit-element";
 import "@polymer/paper-button";
 import "@polymer/paper-input/paper-input.js";
 import "@01ht/ht-spinner";
 import "@01ht/ht-page-header";
 
 class HTAccountSettingsEmail extends LitElement {
-  render() {
-    const { loading } = this;
-    let socialLogin = true;
-    let providerData = firebase.auth().currentUser.providerData;
-    if (providerData.length === 1 && providerData[0].providerId === "password")
-      socialLogin = false;
-    return html`
-    ${SharedStyles}
-    <style>
+  static styles = [
+    window.SharedStyles,
+    css`<style>
         :host {
             display: block;
             position: relative;
@@ -41,30 +35,35 @@ class HTAccountSettingsEmail extends LitElement {
         [hidden] {
             display: none
         }
-    </style>
+    </style>`
+  ];
+
+  render() {
+    const { loading } = this;
+    let socialLogin = true;
+    let providerData = firebase.auth().currentUser.providerData;
+    if (providerData.length === 1 && providerData[0].providerId === "password")
+      socialLogin = false;
+    return html`
     <div id="container">
         <ht-page-header text="Смена email" backURL="/account"></ht-page-header>
-        <p ?hidden=${socialLogin}>Указанный email будет использоваться как логин для входа.</p>
+        <p ?hidden="${socialLogin}">Указанный email будет использоваться как логин для входа.</p>
         <paper-input id="current" label="Текущий email" disabled></paper-input>
         <paper-input id="email" label="Новый email"></paper-input>
-        <paper-input id="repeat" label="Повторите новый email" @change=${_ => {
+        <paper-input id="repeat" label="Повторите новый email" @change="${_ => {
           this._checkRepeat();
-        }} @keyup=${_ => {
+        }}" @keyup="${_ => {
       this._checkRepeat();
-    }}></paper-input>
-        <paper-input id="password" label="Введите ваш действующий пароль" type="password" ?hidden=${socialLogin}></paper-input>
+    }}"></paper-input>
+        <paper-input id="password" label="Введите ваш действующий пароль" type="password" ?hidden="${socialLogin}"></paper-input>
         <div id="action">
-            <paper-button raised class="save" ?hidden=${loading} @click=${e => {
+            <paper-button raised class="save" ?hidden=${loading} @click="${e => {
       this._changeEmail();
-    }}>Изменить
+    }}">Изменить
             </paper-button>
-            <ht-spinner button ?hidden=${!loading}></ht-spinner>
+            <ht-spinner button ?hidden="${!loading}"></ht-spinner>
         </div>
     </div>`;
-  }
-
-  static get is() {
-    return "ht-account-settings-email";
   }
 
   static get properties() {
@@ -244,4 +243,4 @@ class HTAccountSettingsEmail extends LitElement {
   }
 }
 
-customElements.define(HTAccountSettingsEmail.is, HTAccountSettingsEmail);
+customElements.define("ht-account-settings-email", HTAccountSettingsEmail);

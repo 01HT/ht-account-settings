@@ -1,6 +1,6 @@
-import { html } from "@polymer/lit-element";
+import { css } from "lit-element";
 
-export const cropperjsStyles = html`
+export const cropperjsStyles = css`
 <style>
 .cropper-container {
   direction: ltr;

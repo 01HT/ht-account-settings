@@ -1,5 +1,5 @@
 "use strict";
-import { LitElement, html } from "@polymer/lit-element";
+import { LitElement, html, css } from "lit-element";
 import "@polymer/paper-button";
 import "@polymer/paper-input/paper-input.js";
 import "@polymer/paper-icon-button";
@@ -10,11 +10,9 @@ import "@01ht/ht-page-header";
 import "zxcvbn/dist/zxcvbn.js";
 
 class HTAccountSettingsPassword extends LitElement {
-  render() {
-    const { loading, strengthObj } = this;
-    return html`
-    ${window.SharedStyles}
-    <style>
+  static styles = [
+    window.SharedStyles,
+    css`<style>
         paper-input {
             max-width: 300px;
         }
@@ -40,7 +38,12 @@ class HTAccountSettingsPassword extends LitElement {
             display: flex;
             justify-content: flex-end;
         }
-    </style>
+    </style>`
+  ];
+
+  render() {
+    const { loading, strengthObj } = this;
+    return html`
     <iron-iconset-svg size="24" name="ht-account-settings-password">
     <svg>
         <defs>
@@ -58,35 +61,27 @@ class HTAccountSettingsPassword extends LitElement {
         <p>Выберите надежный пароль и не используйте его для других аккаунтов. Минимальная длина пароля – 8 символов. Не используйте пароли от других сайтов или варианты, которые злоумышленники смогут легко
         подобрать.
         <a href="https://support.google.com/accounts/answer/32040" target="_blank">Подробнее...</a></p>
-        <paper-input id="new" label="Новый пароль" minlength="8" ?invalid=${strengthObj.name ===
+        <paper-input id="new" label="Новый пароль" minlength="8" ?invalid="${strengthObj.name ===
           "Очень слабый" ||
           strengthObj.name ===
-            "Слабый"} auto-validate type="password" @change=${_ => {
-      this._passwordChanged();
-    }} @keyup=${_ => {
-      this._passwordChanged();
-    }}></paper-input>
+            "Слабый"}" auto-validate type="password" @change="${
+      this._passwordChanged
+    }" @keyup="${this._passwordChanged}"></paper-input>
     <div id="strength" class="text">Надежность пароля: <span style="color:${
       strengthObj.color
     }">${strengthObj.name}</span></div>
-        <paper-input id="repeat" label="Подтвердите новый пароль" type="password" @change=${_ => {
-          this._checkRepeat();
-        }} @keyup=${_ => {
-      this._checkRepeat();
-    }}></paper-input>
+        <paper-input id="repeat" label="Подтвердите новый пароль" type="password" @change="${
+          this._checkRepeat
+        }" @keyup="${this._checkRepeat}"></paper-input>
         <paper-input id="current" label="Введите ваш текущий пароль" type="password"></paper-input>
         <div id="action">
-            <paper-button raised class="save" ?hidden=${loading} @click=${e => {
-      this._save();
-    }}>Изменить пароль
+            <paper-button raised class="save" ?hidden="${loading}" @click="${
+      this._save
+    }">Изменить пароль
             </paper-button>
-            <ht-spinner button ?hidden=${!loading}></ht-spinner>
+            <ht-spinner button ?hidden="${!loading}"></ht-spinner>
         </div>
     </div>`;
-  }
-
-  static get is() {
-    return "ht-account-settings-password";
   }
 
   static get properties() {
@@ -237,4 +232,7 @@ class HTAccountSettingsPassword extends LitElement {
   }
 }
 
-customElements.define(HTAccountSettingsPassword.is, HTAccountSettingsPassword);
+customElements.define(
+  "ht-account-settings-password",
+  HTAccountSettingsPassword
+);

@@ -1,5 +1,5 @@
 "use strict";
-import { LitElement, html } from "@polymer/lit-element";
+import { LitElement, html, css } from "lit-element";
 import { repeat } from "lit-html/directives/repeat.js";
 import "@polymer/iron-iconset-svg";
 import "@polymer/iron-icon";
@@ -16,16 +16,9 @@ import {
 } from "@01ht/ht-client-helper-functions";
 
 class HTAccountSettingsAvatar extends LitElement {
-  render() {
-    const { data, loading } = this;
-    let providerItems = [];
-    let providers = firebase.auth().currentUser.providerData;
-    for (let provider of providers) {
-      if (provider.providerId !== "password") providerItems.push(provider);
-    }
-    return html`
-    ${window.SharedStyles}
-    <style>
+  static styles = [
+    window.SharedStyles,
+    css`<style>
     a {
       color:inherit;
     }
@@ -150,7 +143,17 @@ class HTAccountSettingsAvatar extends LitElement {
     [hidden], #settings[hidden],  #loading[hidden] {
         display:none;
     }
-    </style>
+    </style>`
+  ];
+
+  render() {
+    const { data, loading } = this;
+    let providerItems = [];
+    let providers = firebase.auth().currentUser.providerData;
+    for (let provider of providers) {
+      if (provider.providerId !== "password") providerItems.push(provider);
+    }
+    return html`
     <iron-iconset-svg size="24" name="ht-account-settings-avatar">
         <svg>
             <defs>
@@ -182,13 +185,13 @@ class HTAccountSettingsAvatar extends LitElement {
                 ${repeat(
                   providerItems,
                   item =>
-                    html`<paper-button ?hidden=${
+                    html`<paper-button ?hidden="${
                       providerItems && providerItems.length === 0 ? true : false
-                    } class="social" raised provider="${
+                    }" class="social" raised provider="${
                       item.providerId
-                    }" @click=${e => {
+                    }" @click="${e => {
                       this._syncSocial(e);
-                    }}><div><img src="${
+                    }}"><div><img src="${
                       item.photoURL
                     }"></div><div class="social-button-title"><iron-icon src="${cloudinaryURL}/image/upload/logos/${item.providerId.replace(
                       ".com",
@@ -198,9 +201,9 @@ class HTAccountSettingsAvatar extends LitElement {
                       ""
                     )}</div></paper-button>`
                 )}
-                <paper-button class="social" raised @click=${_ => {
-                  this._setDefaultAvatar();
-                }}><div><img src="${cloudinaryURL}/image/upload/users/default.svg"></div><div>Стандартный</div>
+                <paper-button class="social" raised @click="${
+                  this._setDefaultAvatar
+                }"><div><img src="${cloudinaryURL}/image/upload/users/default.svg"></div><div>Стандартный</div>
                 </paper-button>
                 </div>
             </div>
@@ -208,14 +211,10 @@ class HTAccountSettingsAvatar extends LitElement {
                 <ht-account-settings-avatar-cropper></ht-account-settings-avatar-cropper>
             </div>
         </div>
-        <div id="loading" ?hidden=${!loading}>
+        <div id="loading" ?hidden="${!loading}">
           <ht-spinner></ht-spinner>
         </div>
     </div>`;
-  }
-
-  static get is() {
-    return "ht-account-settings-avatar";
   }
 
   static get properties() {
@@ -339,4 +338,4 @@ class HTAccountSettingsAvatar extends LitElement {
   }
 }
 
-customElements.define(HTAccountSettingsAvatar.is, HTAccountSettingsAvatar);
+customElements.define("ht-account-settings-avatar", HTAccountSettingsAvatar);

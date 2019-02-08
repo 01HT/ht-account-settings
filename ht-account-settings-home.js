@@ -1,20 +1,14 @@
 "use strict";
-import { LitElement, html } from "@polymer/lit-element";
+import { LitElement, html, css } from "lit-element";
 import "@polymer/iron-iconset-svg";
 import "@polymer/iron-icon";
 import "@01ht/ht-page-header";
 import "@01ht/ht-image";
 
 class HTAccountSettingsHome extends LitElement {
-  render() {
-    const { data } = this;
-    let socialLogin = true;
-    let providerData = firebase.auth().currentUser.providerData;
-    if (providerData.length === 1 && providerData[0].providerId === "password")
-      socialLogin = false;
-    return html`
-    ${SharedStyles}
-    <style>
+  static styles = [
+    window.SharedStyles,
+    css`<style>
         a {
             display: block;
         }
@@ -141,7 +135,16 @@ class HTAccountSettingsHome extends LitElement {
                 grid-column: 1;
             }
         }
-    </style>
+    </style>`
+  ];
+
+  render() {
+    const { data } = this;
+    let socialLogin = true;
+    let providerData = firebase.auth().currentUser.providerData;
+    if (providerData.length === 1 && providerData[0].providerId === "password")
+      socialLogin = false;
+    return html`
     <iron-iconset-svg size="24" name="ht-account-settings-home">
         <svg>
             <defs>
@@ -183,8 +186,8 @@ class HTAccountSettingsHome extends LitElement {
                 <iron-icon icon="ht-account-settings-home:lock"></iron-icon>Безопасность и вход</div>
             <!--<div class="description"></div>-->
             <div class="links">
-                <a href="/account/password" ?hidden=${socialLogin}>Сменить пароль</a>
-                <div disabled ?hidden=${!socialLogin}>Сменить пароль</div>
+                <a href="/account/password" ?hidden="${socialLogin}">Сменить пароль</a>
+                <div disabled ?hidden="${!socialLogin}">Сменить пароль</div>
                 <a href="/account/email">Сменить email</a>
                 <!-- <div disabled>Сменить email</div> -->
             </div>
@@ -205,17 +208,15 @@ class HTAccountSettingsHome extends LitElement {
             <!--<div class="description"></div>-->
             <div class="links">
                 <a href="/account/notifications">Настройка уведомлений</a>
-                <a href="/account/contract" ?hidden=${!data.isAuthor}>Настройки договора</a>
-                <div disabled ?hidden=${data.isAuthor}>Настройки договора</div>
-                <a href="/account/payout" ?hidden=${!data.isAuthor}>Настройки выплат</a>
-                <div disabled ?hidden=${data.isAuthor}>Настройки выплат</div>
+                <a href="/account/contract" ?hidden="${!data.isAuthor}">Настройки договора</a>
+                <div disabled ?hidden="${
+                  data.isAuthor
+                }">Настройки договора</div>
+                <a href="/account/payout" ?hidden="${!data.isAuthor}">Настройки выплат</a>
+                <div disabled ?hidden="${data.isAuthor}">Настройки выплат</div>
             </div>
         </div>
     </div>`;
-  }
-
-  static get is() {
-    return "ht-account-settings-home";
   }
 
   static get properties() {
@@ -225,4 +226,4 @@ class HTAccountSettingsHome extends LitElement {
   }
 }
 
-customElements.define(HTAccountSettingsHome.is, HTAccountSettingsHome);
+customElements.define("ht-account-settings-home", HTAccountSettingsHome);

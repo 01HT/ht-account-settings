@@ -1,5 +1,5 @@
 "use strict";
-import { LitElement, html } from "@polymer/lit-element";
+import { LitElement, html, css } from "lit-element";
 import "@polymer/paper-icon-button";
 import "@polymer/iron-iconset-svg";
 import "@polymer/iron-icon";
@@ -10,11 +10,9 @@ import "@01ht/ht-wysiwyg";
 import "@01ht/ht-page-header";
 
 class HTAccountSettingsPersonal extends LitElement {
-  render() {
-    const { data, loading, emailVerified } = this;
-    return html`
-    ${SharedStyles}
-    <style>
+  static styles = [
+    window.SharedStyles,
+    css`<style>
         :host {
           display: block;
           position: relative;
@@ -81,7 +79,12 @@ class HTAccountSettingsPersonal extends LitElement {
         [hidden] {
             display:none
         }
-    </style>
+    </style>`
+  ];
+
+  render() {
+    const { data, loading, emailVerified } = this;
+    return html`
     <iron-iconset-svg size="24" name="ht-account-settings-personal">
       <svg>
         <defs>
@@ -95,14 +98,14 @@ class HTAccountSettingsPersonal extends LitElement {
           <paper-input id="email" label="Адрес электронной почты" disabled value=${
             data.email
           }></paper-input>
-         <paper-button raised ?hidden=${emailVerified} @click=${_ => {
-      this._sendEmailVerification();
-    }}>Подтвердить email</paper-button>
+         <paper-button raised ?hidden="${emailVerified}" @click="${
+      this._sendEmailVerification
+    }">Подтвердить email</paper-button>
           <!--<paper-tooltip>Адрес электронной почты меняется автоматически при входе в систему.</paper-tooltip>-->
         </div>
-        <paper-input id="displayName" label="Отображаемое имя" auto-validate allowed-pattern="^[0-9a-z\-]+$" value=${
+        <paper-input id="displayName" label="Отображаемое имя" auto-validate allowed-pattern="^[0-9a-z\-]+$" value="${
           data.displayName
-        }></paper-input>
+        }"></paper-input>
         <div id="nameInURLContainer">
           <div class="warning">
               <iron-icon icon="ht-account-settings-personal:warning"></iron-icon>
@@ -110,64 +113,60 @@ class HTAccountSettingsPersonal extends LitElement {
               Изменение влечет за собой изменение всех ссылок в которых задействован данный параметр. Существующие ссылки в интернете с параметром, станут недоступными и будут выдавать ошибку 404. Поисковым системам потребуется время для повторного индексирования ссылок и размещения информации в поисковой выдаче. Соответственно частое изменение данного параметра крайне не рекомендуется.
             </paper-tooltip>
           </div>
-          <paper-input id="nameInURL" label="Имя в URL" placeholder="my-nickname" allowed-pattern="^[0-9a-z\-]+$" auto-validate maxlength="30" value=${
+          <paper-input id="nameInURL" label="Имя в URL" placeholder="my-nickname" allowed-pattern="^[0-9a-z\-]+$" auto-validate maxlength="30" value="${
             data.nameInURL
-          }>
+          }">
           <div slot="prefix">/user/</div>
           <div slot="suffix">/${data.userNumber}</div>
         </paper-input>
         </div>
-        <paper-input id="lastName" label="Фамилия" value=${
+        <paper-input id="lastName" label="Фамилия" value="${
           data.lastName
-        }></paper-input>
-        <paper-input id="firstName" label="Имя" value=${
+        }"></paper-input>
+        <paper-input id="firstName" label="Имя" value="${
           data.firstName
-        }></paper-input>
-        <paper-input id="country" label="Страна" value=${
+        }"></paper-input>
+        <paper-input id="country" label="Страна" value="${
           data.country
-        }></paper-input>
-        <paper-input id="city" label="Город" auto-validate value=${
+        }"></paper-input>
+        <paper-input id="city" label="Город" auto-validate value="${
           data.city
-        }></paper-input>
-        <paper-input id="company" label="Место работы" value=${
+        }"></paper-input>
+        <paper-input id="company" label="Место работы" value="${
           data.company
-        }></paper-input>
-        <paper-input id="position" label="Должность" value=${
+        }"></paper-input>
+        <paper-input id="position" label="Должность" value="${
           data.position
-        }></paper-input>
-        <paper-input id="phone" label="Телефон" value=${
+        }"></paper-input>
+        <paper-input id="phone" label="Телефон" value="${
           data.phone
-        }></paper-input>
-        <paper-input id="website" label="Ваш сайт" value=${
+        }"></paper-input>
+        <paper-input id="website" label="Ваш сайт" value="${
           data.website
-        }></paper-input>
-        <paper-input id="google" label="Google+" value=${
+        }"></paper-input>
+        <paper-input id="google" label="Google+" value="${
           data.google
-        }></paper-input>
-        <paper-input id="facebook" label="Facebook" value=${
+        }"></paper-input>
+        <paper-input id="facebook" label="Facebook" value="${
           data.facebook
-        }></paper-input>
-        <paper-input id="twitter" label="Twitter" value=${
+        }"></paper-input>
+        <paper-input id="twitter" label="Twitter" value="${
           data.twitter
-        }></paper-input>
-        <paper-input id="github" label="GitHub" value=${
+        }"></paper-input>
+        <paper-input id="github" label="GitHub" value="${
           data.github
-        }></paper-input>
+        }"></paper-input>
         <h4>О себе</h4>
         <ht-wysiwyg id="description"></ht-wysiwyg>
     
         <div id="action">
-            <paper-button raised class="save" ?hidden=${loading} @click=${e => {
-      this._save();
-    }}>Сохранить
+            <paper-button raised class="save" ?hidden="${loading}" @click="${
+      this._save
+    }">Сохранить
             </paper-button>
-            <ht-spinner button ?hidden=${!loading}></ht-spinner>
+            <ht-spinner button ?hidden="${!loading}"></ht-spinner>
         </div>
     </div>`;
-  }
-
-  static get is() {
-    return "ht-account-settings-personal";
   }
 
   static get properties() {
@@ -289,4 +288,7 @@ class HTAccountSettingsPersonal extends LitElement {
   }
 }
 
-customElements.define(HTAccountSettingsPersonal.is, HTAccountSettingsPersonal);
+customElements.define(
+  "ht-account-settings-personal",
+  HTAccountSettingsPersonal
+);

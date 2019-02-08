@@ -1,15 +1,13 @@
 "use strict";
-import { LitElement, html } from "@polymer/lit-element";
+import { LitElement, html, css } from "lit-element";
 import "@polymer/iron-iconset-svg/iron-iconset-svg.js";
 import "@polymer/iron-icon/iron-icon.js";
 import "@polymer/paper-ripple";
 
 class HTAccountSettingsContractLegalChanger extends LitElement {
-  render() {
-    const { legalType, opened } = this;
-    return html`
-    ${SharedStyles}
-        <style>
+  static styles = [
+    window.SharedStyles,
+    css`<style>
         :host {
             display: flex;
             position: relative;
@@ -103,7 +101,12 @@ class HTAccountSettingsContractLegalChanger extends LitElement {
         [hidden] {
             display:none;
         }
-    </style>
+    </style>`
+  ];
+
+  render() {
+    const { legalType, opened } = this;
+    return html`
     <iron-iconset-svg size="24" name="ht-account-settings-payout-legal-changer">
       <svg>
         <defs>
@@ -116,8 +119,8 @@ class HTAccountSettingsContractLegalChanger extends LitElement {
           this._open();
         }}>
             <div class="list-dropdown">
-                <div id="resident" class="item" ?hidden=${legalType !==
-                  "resident"}>
+                <div id="resident" class="item" ?hidden="${legalType !==
+                  "resident"}">
                     <img src="https://res.cloudinary.com/cdn-01ht/image/upload/v1545379249/apps/elements/pages/account/payout/russia.svg" alt="Resident">
                     <div class="text-block">
                       <div class="payment-text">Резидент РФ</div>
@@ -126,8 +129,8 @@ class HTAccountSettingsContractLegalChanger extends LitElement {
                     <paper-ripple></paper-ripple>
                     <iron-icon icon="ht-account-settings-payout-legal-changer:keyboard-arrow-down"></iron-icon>
                 </div>
-                <div id="non-resident" class="item" ?hidden=${legalType !==
-                  "non-resident"}>
+                <div id="non-resident" class="item" ?hidden="${legalType !==
+                  "non-resident"}">
                     <img src="https://res.cloudinary.com/cdn-01ht/image/upload/v1545381934/apps/elements/pages/account/payout/earth-globe.svg" alt="Non-resident">
                     <div class="text-block">
                       <div class="payment-text">Нерезидент РФ</div>
@@ -136,8 +139,8 @@ class HTAccountSettingsContractLegalChanger extends LitElement {
                     <paper-ripple></paper-ripple>
                     <iron-icon icon="ht-account-settings-payout-legal-changer:keyboard-arrow-down"></iron-icon>
                 </div>
-                <div id="individual-entrepreneur" class="item" ?hidden=${legalType !==
-                  "individual-entrepreneur"}>
+                <div id="individual-entrepreneur" class="item" ?hidden="${legalType !==
+                  "individual-entrepreneur"}">
                     <img src="https://res.cloudinary.com/cdn-01ht/image/upload/v1545379249/apps/elements/pages/account/payout/russia.svg" alt="Individual entrepreneur">
                     <div class="text-block">
                       <div class="payment-text">ИП</div>
@@ -146,7 +149,8 @@ class HTAccountSettingsContractLegalChanger extends LitElement {
                     <paper-ripple></paper-ripple>
                     <iron-icon icon="ht-account-settings-payout-legal-changer:keyboard-arrow-down"></iron-icon>
                 </div>
-                <div id="entity" class="item" ?hidden=${legalType !== "entity"}>
+                <div id="entity" class="item" ?hidden="${legalType !==
+                  "entity"}">
                     <img src="https://res.cloudinary.com/cdn-01ht/image/upload/v1545379249/apps/elements/pages/account/payout/russia.svg" alt="Entity">
                     <div class="text-block">
                       <div class="payment-text">Юридическое лицо</div>
@@ -157,14 +161,14 @@ class HTAccountSettingsContractLegalChanger extends LitElement {
                 </div>
             </div>
         </div>
-        <div id="dropdown" ?hidden=${!opened}>
+        <div id="dropdown" ?hidden="${!opened}">
             <div class="list-dropdown">
-                <div id="resident" class="item" ?hidden=${legalType ===
-                  "resident"} @click=${_ => {
+                <div id="resident" class="item" ?hidden="${legalType ===
+                  "resident"}" @click="${_ => {
       this._change("resident");
-    }} @tap=${_ => {
+    }}" @tap="${_ => {
       this._change("resident");
-    }}>
+    }}">
                     <img src="https://res.cloudinary.com/cdn-01ht/image/upload/v1545379249/apps/elements/pages/account/payout/russia.svg" alt="Resident">
                     <div class="text-block">
                       <div class="payment-text">Резидент РФ</div>
@@ -172,12 +176,12 @@ class HTAccountSettingsContractLegalChanger extends LitElement {
                     </div>
                     <paper-ripple></paper-ripple>
                 </div>
-                <div id="non-resident" class="item" ?hidden=${legalType ===
-                  "non-resident"} @click=${_ => {
+                <div id="non-resident" class="item" ?hidden="${legalType ===
+                  "non-resident"}" @click="${_ => {
       this._change("non-resident");
-    }} @tap=${_ => {
+    }}" @tap="${_ => {
       this._change("non-resident");
-    }}>
+    }}">
                     <img src="https://res.cloudinary.com/cdn-01ht/image/upload/v1545381934/apps/elements/pages/account/payout/earth-globe.svg" alt="Non-resident">
                     <div class="text-block">
                       <div class="payment-text">Нерезидент РФ</div>
@@ -185,12 +189,12 @@ class HTAccountSettingsContractLegalChanger extends LitElement {
                     </div>
                     <paper-ripple></paper-ripple>
                 </div>
-                <div id="individual-entrepreneur" class="item" ?hidden=${legalType ===
-                  "individual-entrepreneur"} @click=${_ => {
+                <div id="individual-entrepreneur" class="item" ?hidden="${legalType ===
+                  "individual-entrepreneur"}" @click="${_ => {
       this._change("individual-entrepreneur");
-    }} @tap=${_ => {
+    }}" @tap="${_ => {
       this._change("individual-entrepreneur");
-    }}>
+    }}">
                     <img src="https://res.cloudinary.com/cdn-01ht/image/upload/v1545379249/apps/elements/pages/account/payout/russia.svg" alt="Individual entrepreneur">
                     <div class="text-block">
                       <div class="payment-text">ИП</div>
@@ -198,12 +202,12 @@ class HTAccountSettingsContractLegalChanger extends LitElement {
                     </div>
                     <paper-ripple></paper-ripple>
                 </div>
-                <div id="entity" class="item" ?hidden=${legalType ===
-                  "entity"} @click=${_ => {
+                <div id="entity" class="item" ?hidden="${legalType ===
+                  "entity"}" @click="${_ => {
       this._change("entity");
-    }} @tap=${_ => {
+    }}" @tap="${_ => {
       this._change("entity");
-    }}>
+    }}">
                     <img src="https://res.cloudinary.com/cdn-01ht/image/upload/v1545379249/apps/elements/pages/account/payout/russia.svg" alt="Entity">
                     <div class="text-block">
                       <div class="payment-text">Юридическое лицо</div>
@@ -215,10 +219,6 @@ class HTAccountSettingsContractLegalChanger extends LitElement {
         </div>
     </div>
 `;
-  }
-
-  static get is() {
-    return "ht-account-settings-contract-legal-changer";
   }
 
   static get properties() {
@@ -253,6 +253,6 @@ class HTAccountSettingsContractLegalChanger extends LitElement {
 }
 
 customElements.define(
-  HTAccountSettingsContractLegalChanger.is,
+  "ht-account-settings-contract-legal-changer",
   HTAccountSettingsContractLegalChanger
 );

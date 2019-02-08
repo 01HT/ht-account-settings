@@ -1,15 +1,14 @@
 "use strict";
-import { LitElement, html } from "@polymer/lit-element";
+import { LitElement, html, css } from "lit-element";
 import "@polymer/paper-input/paper-input.js";
 import "@01ht/ht-spinner";
 import "@01ht/ht-page-header";
 import "./ht-account-settings-payout-changer.js";
+
 class HTAccountSettingsPayout extends LitElement {
-  render() {
-    let { data, loading, payoutType } = this;
-    return html`
-    ${SharedStyles}
-    <style>
+  static styles = [
+    window.SharedStyles,
+    css`<style>
       :host {
         display: block;
         position: relative;
@@ -88,19 +87,24 @@ class HTAccountSettingsPayout extends LitElement {
       [hidden] {
           display:none
       }
-    </style>
+    </style>`
+  ];
+
+  render() {
+    let { data, loading, payoutType } = this;
+    return html`
     <div id="container">
         <ht-page-header text="Настройки выплат" backURL="/account"></ht-page-header>
         <div class="card">
           <div class="section">
             <div class="mini-title">Выберите способ выплаты (<a href="https://docs.elements.01.ht/guide/payout/#способ-выпnаты" target="_blank" rel="noopener">подробнее</a>)</div>
-            <ht-account-settings-payout-changer .payoutType=${payoutType}></ht-account-settings-payout-changer>
+            <ht-account-settings-payout-changer .payoutType="${payoutType}"></ht-account-settings-payout-changer>
             ${
               payoutType === "bank_card"
                 ? html`
                 <div id="bank_card">
-                  <paper-input class="number" label="Номер банковской карты" value=${data.number ||
-                    ""}></paper-input>
+                  <paper-input class="number" label="Номер банковской карты" value="${data.number ||
+                    ""}"></paper-input>
                 </div>
             `
                 : null
@@ -109,14 +113,14 @@ class HTAccountSettingsPayout extends LitElement {
               payoutType === "bank_account"
                 ? html`
                 <div id="bank_account">
-                  <paper-input class="number" label="Номер счета" value=${data.number ||
-                    ""}></paper-input>
-                  <paper-input class="name" label="Банк" value=${data.name ||
-                    ""}></paper-input>
-                  <paper-input class="bik" label="БИК" value=${data.bik ||
-                    ""}></paper-input>
-                  <paper-input class="correspondentAccount" label="Кор.счет" value=${data.correspondentAccount ||
-                    ""}></paper-input>
+                  <paper-input class="number" label="Номер счета" value="${data.number ||
+                    ""}"></paper-input>
+                  <paper-input class="name" label="Банк" value="${data.name ||
+                    ""}"></paper-input>
+                  <paper-input class="bik" label="БИК" value="${data.bik ||
+                    ""}"></paper-input>
+                  <paper-input class="correspondentAccount" label="Кор.счет" value="${data.correspondentAccount ||
+                    ""}"></paper-input>
                 </div>
             `
                 : null
@@ -127,56 +131,56 @@ class HTAccountSettingsPayout extends LitElement {
             <div id="swift">
               <div class="notify">Из-за ограничений, накладываемых на выплаты SWIFT финансовыми учреждениями, поля не должны содержать символы: <span>. , # & $ @ % / ( ) * !</span></div>
               <p>* - поля обязательны для заполнения</p>
-              <paper-input class="fullname" label="Full Name" value=${data.swiftFullname ||
-                ""}></paper-input>
-              <paper-input class="billingAddressLine1" label="Billing Address Line 1 *" required value=${data.billingAddressLine1 ||
-                ""}></paper-input>
+              <paper-input class="fullname" label="Full Name" value="${data.swiftFullname ||
+                ""}"></paper-input>
+              <paper-input class="billingAddressLine1" label="Billing Address Line 1 *" required value="${data.billingAddressLine1 ||
+                ""}"></paper-input>
               <div class="input-sub-text">Street Address</div>
-              <paper-input class="billingAddressLine2" label="Billing Address Line 2" value=${data.billingAddressLine2 ||
-                ""}></paper-input>
+              <paper-input class="billingAddressLine2" label="Billing Address Line 2" value="${data.billingAddressLine2 ||
+                ""}"></paper-input>
               <div class="input-sub-text">Level, unit or room number</div>
-              <paper-input class="billingAddressLine3" label="Billing Address Line 3" value=${data.billingAddressLine3 ||
-                ""}></paper-input>
-              <paper-input class="city" label="City *" value=${data.city ||
-                ""}></paper-input>
-              <paper-input class="state" label="State" value=${data.state ||
-                ""}></paper-input>
+              <paper-input class="billingAddressLine3" label="Billing Address Line 3" value="${data.billingAddressLine3 ||
+                ""}"></paper-input>
+              <paper-input class="city" label="City *" value="${data.city ||
+                ""}"></paper-input>
+              <paper-input class="state" label="State" value="${data.state ||
+                ""}"></paper-input>
               <div class="input-sub-text">Up to 4 letters, numbers or spaces e.g. Illinois becomes IL</div>
-              <paper-input class="postcode" label="Postcode *" value=${data.postcode ||
-                ""}></paper-input>
+              <paper-input class="postcode" label="Postcode *" value="${data.postcode ||
+                ""}"></paper-input>
               <div class="input-sub-text">Up to 8 letters or numbers</div>
-              <paper-input class="country" label="Country *" value=${data.country ||
-                ""}></paper-input>
+              <paper-input class="country" label="Country *" value="${data.country ||
+                ""}"></paper-input>
               <div class="input-spacer"></div>
-              <paper-input class="bankAccountHolderName" label="Bank Account Holder's Name *" value=${data.bankAccountHolderName ||
-                ""}></paper-input>
+              <paper-input class="bankAccountHolderName" label="Bank Account Holder's Name *" value="${data.bankAccountHolderName ||
+                ""}"></paper-input>
               <div class="input-sub-text">Your full name that appears on your bank account statement</div>
-              <paper-input class="bankAccountIBAN" label="Bank Account Number/IBAN *" value=${data.bankAccountIBAN ||
-                ""}></paper-input>
+              <paper-input class="bankAccountIBAN" label="Bank Account Number/IBAN *" value="${data.bankAccountIBAN ||
+                ""}"></paper-input>
               <div class="input-sub-text">YUp to 34 letters and numbers. Australian account numbers should include the BSB number.</div>
-              <paper-input class="swiftCode" label="SWIFT Code *" value=${data.swiftCode ||
-                ""}></paper-input>
+              <paper-input class="swiftCode" label="SWIFT Code *" value="${data.swiftCode ||
+                ""}"></paper-input>
               <div class="input-sub-text">either 8 or 11 characters e.g. ABNAUS33 or 1234567891</div>
-              <paper-input class="bankNameInFull" label="Bank Name in Full *" value=${data.bankNameInFull ||
-                ""}></paper-input>
+              <paper-input class="bankNameInFull" label="Bank Name in Full *" value="${data.bankNameInFull ||
+                ""}"></paper-input>
               <div class="input-sub-text">Up to 30 letters, numbers or spaces.</div>
-              <paper-input class="bankBranchCity" label="Bank Branch City *" value=${data.bankBranchCity ||
-                ""}></paper-input>
+              <paper-input class="bankBranchCity" label="Bank Branch City *" value="${data.bankBranchCity ||
+                ""}"></paper-input>
               <div class="input-sub-text">Up to 12 letters, numbers or spaces.</div>
-              <paper-input class="bankBranchCountry" label="Bank Branch Country *" value=${data.bankBranchCountry ||
-                ""}></paper-input>
+              <paper-input class="bankBranchCountry" label="Bank Branch Country *" value="${data.bankBranchCountry ||
+                ""}"></paper-input>
               <div class="input-spacer"></div>
-              <paper-input class="intermediaryBankCode" label="Intermediary Bank - Bank Code" value=${data.intermediaryBankCode ||
-                ""}></paper-input>
+              <paper-input class="intermediaryBankCode" label="Intermediary Bank - Bank Code" value="${data.intermediaryBankCode ||
+                ""}"></paper-input>
               <div class="input-sub-text">either 8 or 11 characters e.g. ABNAUS33 or 1234567891</div>
-              <paper-input class="intermediaryBankName" label="Intermediary Bank - Name" value=${data.intermediaryBankName ||
-                ""}></paper-input>
+              <paper-input class="intermediaryBankName" label="Intermediary Bank - Name" value="${data.intermediaryBankName ||
+                ""}"></paper-input>
               <div class="input-sub-text">e.g. Citibank</div>
-              <paper-input class="intermediaryBankCity" label="Intermediary Bank - City" value=${data.intermediaryBankCity ||
-                ""}></paper-input>
+              <paper-input class="intermediaryBankCity" label="Intermediary Bank - City" value="${data.intermediaryBankCity ||
+                ""}"></paper-input>
               <div class="input-sub-text">Up to 12 letters, numbers or spaces.</div>
-              <paper-input class="intermediaryBankCountry" label="Intermediary Bank - Country" value=${data.intermediaryBankCountry ||
-                ""}></paper-input>
+              <paper-input class="intermediaryBankCountry" label="Intermediary Bank - Country" value="${data.intermediaryBankCountry ||
+                ""}"></paper-input>
               <div class="notify">Обратите внимание, что комиссия за транзакцию в размере 25 долларов США взимается со всех банковских переводов. 01HT не может нести ответственность за задержки, дополнительные расходы или финансовые убытки, вызванные предоставлением неверной информации об учетной записи, поэтому, пожалуйста, убедитесь, что вы дважды проверили данные в своем финансовом учреждении перед отправкой запроса на банковский перевод.</div>
             </div>
             `
@@ -185,19 +189,15 @@ class HTAccountSettingsPayout extends LitElement {
           </div>
           <div class="separator"></div>
           <div class="actions">
-            <paper-button raised class="save" ?hidden=${loading} @click=${e => {
-      this._save();
-    }}>Сохранить
+            <paper-button raised class="save" ?hidden="${loading}" @click="${
+      this._save
+    }">Сохранить
             </paper-button>
-            <ht-spinner button ?hidden=${!loading}></ht-spinner>
+            <ht-spinner button ?hidden="${!loading}"></ht-spinner>
         </div>
         </div>
         
     </div>`;
-  }
-
-  static get is() {
-    return "ht-account-settings-payout";
   }
 
   static get properties() {
@@ -386,4 +386,4 @@ class HTAccountSettingsPayout extends LitElement {
   }
 }
 
-customElements.define(HTAccountSettingsPayout.is, HTAccountSettingsPayout);
+customElements.define("ht-account-settings-payout", HTAccountSettingsPayout);

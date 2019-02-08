@@ -1,5 +1,5 @@
 "use strict";
-import { LitElement, html } from "@polymer/lit-element";
+import { LitElement, html, css } from "lit-element";
 import "@polymer/paper-input/paper-input.js";
 import "@polymer/paper-radio-button/paper-radio-button.js";
 import "@polymer/paper-radio-group/paper-radio-group.js";
@@ -13,19 +13,9 @@ import { generateContract } from "./generateContract.js";
 import { callFirebaseHTTPFunction } from "@01ht/ht-client-helper-functions";
 
 class HTAccountSettingsContract extends LitElement {
-  render() {
-    let {
-      data,
-      loading,
-      legalType,
-      showCurrent,
-      showConclusion,
-      conclusionLoading,
-      currentLoading
-    } = this;
-    return html`
-    ${SharedStyles}
-    <style>
+  static styles = [
+    window.SharedStyles,
+    css`<style>
       :host {
         display: block;
         position: relative;
@@ -140,7 +130,20 @@ class HTAccountSettingsContract extends LitElement {
       [hidden] {
         display:none
       }
-    </style>
+    </style>`
+  ];
+
+  render() {
+    let {
+      data,
+      loading,
+      legalType,
+      showCurrent,
+      showConclusion,
+      conclusionLoading,
+      currentLoading
+    } = this;
+    return html`
     <div id="container">
         <ht-page-header text="Настройки договора" backURL="/account"></ht-page-header>
         ${
@@ -151,20 +154,20 @@ class HTAccountSettingsContract extends LitElement {
             <h2 class="mdc-typography--headline6">Текущий договор</h2>
             <div class="item"><span>Номер:</span> ${data.contractNumber}</div>
             <div class="item"><span>Версия:</span> ${data.version}</div>
-            <div class="item"><span>Дата заключения:</span> <ht-date .data=${
+            <div class="item"><span>Дата заключения:</span> <ht-date .data="${
               data.created
-            }></ht-date></div>
+            }"></ht-date></div>
           </div>
           <div class="separator"></div>
             <div class="actions">
-              <ht-spinner button class="current-loading" ?hidden=${!currentLoading}></ht-spinner>
-              <paper-button class="dissolve" ?hidden=${currentLoading} @click=${e => {
+              <ht-spinner button class="current-loading" ?hidden="${!currentLoading}"></ht-spinner>
+              <paper-button class="dissolve" ?hidden="${currentLoading}" @click="${e => {
                 this._dissolve();
-              }}>Расторгнуть
+              }}">Расторгнуть
               </paper-button>
-             <paper-button raised ?hidden=${currentLoading} @click=${e => {
+             <paper-button raised ?hidden="${currentLoading}" @click="${e => {
                 this._download();
-              }}>Скачать 
+              }}">Скачать 
               </paper-button>
               
           </div>
@@ -187,35 +190,35 @@ class HTAccountSettingsContract extends LitElement {
             }</h2>
             <p>Информация касающаяся заключения договора подробно рассмотрена в соответствующем разделе <a href="https://docs.elements.01.ht/guide/conclusion-contract/" target="_blank" rel="noopener">документации</a>.</p>
             <div class="mini-title">Выберите ваш статус</div>
-            <ht-account-settings-contract-legal-changer .legalType=${legalType}></ht-account-settings-contract-legal-changer>
+            <ht-account-settings-contract-legal-changer .legalType="${legalType}"></ht-account-settings-contract-legal-changer>
             <!-- Resident or Non-resident -->
             ${
               legalType === "resident" || legalType === "non-resident"
                 ? html`
                 <div id="resident">
-                  <paper-input class="fullName" label="ФИО" value=${data.fullName ||
-                    ""}></paper-input>
-                  <paper-input class="citizenship" label="Гражданство" value=${data.citizenship ||
-                    ""}></paper-input>
-                  <paper-input class="inn" label="ИНН" value=${data.inn ||
-                    ""}></paper-input>
-                  <paper-input class="snils" label="СНИЛС" value=${data.snils ||
-                    ""}></paper-input>
+                  <paper-input class="fullName" label="ФИО" value="${data.fullName ||
+                    ""}"></paper-input>
+                  <paper-input class="citizenship" label="Гражданство" value="${data.citizenship ||
+                    ""}"></paper-input>
+                  <paper-input class="inn" label="ИНН" value="${data.inn ||
+                    ""}"></paper-input>
+                  <paper-input class="snils" label="СНИЛС" value="${data.snils ||
+                    ""}"></paper-input>
                   <div class="notify">Наличие ИНН и СНИЛС обязательно, в случае если вы являетесь резидентом РФ.</div>
                   <div class="mini-title pasport">Для граждан РФ</div>
                   <div class="sub-title">Паспортные данные</div>
-                  <paper-input class="passportSeries" label="Серия" value=${data.passportSeries ||
-                    ""}></paper-input>
-                  <paper-input class="passportNumber" label="Номер" value=${data.passportNumber ||
-                    ""}></paper-input>
-                  <paper-input class="passportIssued" label="Выдан" value=${data.passportIssued ||
-                    ""}></paper-input>
-                  <paper-input class="passportIssueDate" label="Дата выдачи" value=${data.passportIssueDate ||
-                    ""}></paper-input>
-                  <paper-input class="passportDivisionCode" label="Код подразделения" value=${data.passportDivisionCode ||
-                    ""}></paper-input>
-                  <paper-input class="passportAddress" label="Адрес регистрации" value=${data.passportAddress ||
-                    ""}></paper-input>
+                  <paper-input class="passportSeries" label="Серия" value="${data.passportSeries ||
+                    ""}"></paper-input>
+                  <paper-input class="passportNumber" label="Номер" value="${data.passportNumber ||
+                    ""}"></paper-input>
+                  <paper-input class="passportIssued" label="Выдан" value="${data.passportIssued ||
+                    ""}"></paper-input>
+                  <paper-input class="passportIssueDate" label="Дата выдачи" value="${data.passportIssueDate ||
+                    ""}"></paper-input>
+                  <paper-input class="passportDivisionCode" label="Код подразделения" value="${data.passportDivisionCode ||
+                    ""}"></paper-input>
+                  <paper-input class="passportAddress" label="Адрес регистрации" value="${data.passportAddress ||
+                    ""}"></paper-input>
                   <div class="mini-title pasport">Для иностранных граждан</div>
                   
                   <p>Для заключения договора необходимы данные паспорта иностранного гражданина либо иного документа, установленного федеральным законодательством или признаваемого в соответствии с международным договором РФ в качестве документа, удостоверяющего личность иностранного гражданина. (к примеру вид на жительство, разрешение на временное проживание в РФ, удостоверение беженца, свидетельство о предоставлении временного убежища и др.)</p>
@@ -224,8 +227,8 @@ class HTAccountSettingsContract extends LitElement {
                     ""}></paper-input>
 
                   <div class="mini-title pasport">Статус иностранного гражданина</div>
-                  <paper-radio-group class="foreignCitizenStatus" allow-empty-selection selected=${data.foreignCitizenStatus ||
-                    ""}>
+                  <paper-radio-group class="foreignCitizenStatus" allow-empty-selection selected="${data.foreignCitizenStatus ||
+                    ""}">
                     <paper-radio-button name="resident-outside-rf">Постоянно проживающий за пределами РФ<br><span>взносы не начисляются</span></paper-radio-button>
                     <paper-radio-button name="permanently-residing-rf">Постоянно проживающий в РФ<br><span>начисляются взносы в ПФР, ФФОМС</span></paper-radio-button>
                     <paper-radio-button name="temporarily-residing-rf">Временно проживающий на территории РФ или временно пребывающий гражданин страны - члена ЕАЭС<br><span>начисляются взносы в ПФР, ФФОМС</paper-radio-button>
@@ -243,14 +246,14 @@ class HTAccountSettingsContract extends LitElement {
               legalType === "individual-entrepreneur"
                 ? html`
               <div id="individual-entrepreneur">
-                  <paper-input class="fullName" label="ФИО" value=${data.fullName ||
-                    ""}></paper-input>
-                   <paper-input class="registrationAddress" label="Адрес регистрации" value=${data.registrationAddress ||
-                     ""}></paper-input>
-                  <paper-input class="inn" label="ИНН" value=${data.inn ||
-                    ""}></paper-input>
-                  <paper-input class="ogrnip" label="ОГРНИП" value=${data.ogrnip ||
-                    ""}></paper-input>
+                  <paper-input class="fullName" label="ФИО" value="${data.fullName ||
+                    ""}"></paper-input>
+                   <paper-input class="registrationAddress" label="Адрес регистрации" value="${data.registrationAddress ||
+                     ""}"></paper-input>
+                  <paper-input class="inn" label="ИНН" value="${data.inn ||
+                    ""}"></paper-input>
+                  <paper-input class="ogrnip" label="ОГРНИП" value="${data.ogrnip ||
+                    ""}"></paper-input>
               </div>
             `
                 : null
@@ -260,27 +263,27 @@ class HTAccountSettingsContract extends LitElement {
               legalType === "entity"
                 ? html`
             <div id="entity">
-              <paper-input class="fullName" label="Полное наименование" value=${data.fullName ||
-                ""}></paper-input>
-              <paper-input class="name" label="Сокращенное наименование" value=${data.name ||
-                ""}></paper-input>
-              <paper-input class="ogrn" label="ОГРН" value=${data.ogrn ||
-                ""}></paper-input>
-              <paper-input class="inn" label="ИНН" value=${data.inn ||
-                ""}></paper-input>
-              <paper-input class="kpp" label="КПП" value=${data.kpp ||
-                ""}></paper-input>
-              <paper-input class="address" label="Адрес" value=${data.address ||
-                ""}></paper-input>
-              <paper-input class="bossFullName" label="ФИО руководителя организации" value=${data.bossFullName ||
-                ""}></paper-input>
+              <paper-input class="fullName" label="Полное наименование" value="${data.fullName ||
+                ""}"></paper-input>
+              <paper-input class="name" label="Сокращенное наименование" value="${data.name ||
+                ""}"></paper-input>
+              <paper-input class="ogrn" label="ОГРН" value="${data.ogrn ||
+                ""}"></paper-input>
+              <paper-input class="inn" label="ИНН" value="${data.inn ||
+                ""}"></paper-input>
+              <paper-input class="kpp" label="КПП" value="${data.kpp ||
+                ""}"></paper-input>
+              <paper-input class="address" label="Адрес" value="${data.address ||
+                ""}"></paper-input>
+              <paper-input class="bossFullName" label="ФИО руководителя организации" value="${data.bossFullName ||
+                ""}"></paper-input>
               <div class="mini-title pasport">Подписант</div>
-              <paper-input class="signerFullName" label="ФИО подписанта" value=${data.signerFullName ||
-                ""}></paper-input>
-              <paper-input class="signerPosition" label="Должность подписанта" value=${data.signerPosition ||
-                ""}></paper-input>
-              <paper-input class="base" label="Основание" value=${data.base ||
-                "Устав"} disabled></paper-input>
+              <paper-input class="signerFullName" label="ФИО подписанта" value="${data.signerFullName ||
+                ""}"></paper-input>
+              <paper-input class="signerPosition" label="Должность подписанта" value="${data.signerPosition ||
+                ""}"></paper-input>
+              <paper-input class="base" label="Основание" value="${data.base ||
+                "Устав"}" disabled></paper-input>
               <div class="notify">В случае, если в списке отсутствует ваше основание, напишите его нам на support@01.ht и мы его добавим в течение 1-2 дней.</div>
             </div>
             `
@@ -291,14 +294,14 @@ class HTAccountSettingsContract extends LitElement {
           }
           <div class="separator"></div>
             <div class="actions">
-              <ht-spinner button class="preview-loading" ?hidden=${!conclusionLoading}></ht-spinner>
-                  <paper-button class="preview" ?hidden=${conclusionLoading} @click=${e => {
+              <ht-spinner button class="preview-loading" ?hidden="${!conclusionLoading}"></ht-spinner>
+                  <paper-button class="preview" ?hidden="${conclusionLoading}" @click="${e => {
                 this._preview();
-              }}>Посмотреть
+              }}">Посмотреть
               </paper-button>
-              <paper-button raised class="conclude" ?hidden=${conclusionLoading} @click=${e => {
+              <paper-button raised class="conclude" ?hidden="${conclusionLoading}" @click="${e => {
                 this._conclude();
-              }}>Заключить
+              }}">Заключить
               </paper-button>
           </div>
         </div>`
@@ -306,10 +309,6 @@ class HTAccountSettingsContract extends LitElement {
         }
         
     </div>`;
-  }
-
-  static get is() {
-    return "ht-account-settings-contract";
   }
 
   static get properties() {
@@ -649,4 +648,7 @@ class HTAccountSettingsContract extends LitElement {
   }
 }
 
-customElements.define(HTAccountSettingsContract.is, HTAccountSettingsContract);
+customElements.define(
+  "ht-account-settings-contract",
+  HTAccountSettingsContract
+);

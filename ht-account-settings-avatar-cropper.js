@@ -1,5 +1,5 @@
 "use strict";
-import { LitElement, html } from "@polymer/lit-element";
+import { LitElement, html, css } from "lit-element";
 import "@polymer/iron-iconset-svg";
 import "@polymer/iron-icon";
 import "@polymer/paper-button";
@@ -7,12 +7,10 @@ import { cropperjsStyles } from "./cropperjs-styles.js";
 import Cropper from "cropperjs/dist/cropper.esm.js";
 
 class HTAccountSettingsAvatarCropper extends LitElement {
-  render() {
-    const { showCropper } = this;
-    return html`
-    ${SharedStyles}
-    ${cropperjsStyles}
-    <style>
+  static styles = [
+    window.SharedStyles,
+    cropperjsStyles,
+    css`<style>
     img {
         max-width: 100%;
     }
@@ -45,7 +43,12 @@ class HTAccountSettingsAvatarCropper extends LitElement {
       border-radius: 50%;
       background: #fff;
     }
-    </style>
+    </style>`
+  ];
+
+  render() {
+    const { showCropper } = this;
+    return html`
     <iron-iconset-svg size="24" name="ht-account-settings-avatar-cropper">
     <svg>
         <defs>
@@ -56,27 +59,21 @@ class HTAccountSettingsAvatarCropper extends LitElement {
     </svg>
     </iron-iconset-svg>
     <div id="container">
-        <paper-button raised @click=${_ => {
-          this._openFileInput();
-        }}>
+        <paper-button raised @click="${this._openFileInput}">
         <iron-icon icon="ht-account-settings-avatar-cropper:cloud-upload"></iron-icon>Загрузить свой аватар</paper-button>
         <input type="file" accept="image/gif, image/tiff, image/jpeg, image/png, image/webp" style="visibility: hidden;" />
-        <div id="cropper" ?hidden=${!showCropper}>
+        <div id="cropper" ?hidden="${!showCropper}">
             <div id="crop-region">
                 <img id="image">
             </div>
             <div id="preview-block">
                 <div id="preview"></div>
-                <paper-button id="save" raised @click=${_ => {
-                  this._save();
-                }}>Сохранить</paper-button>
+                <paper-button id="save" raised @click="${
+                  this._save
+                }">Сохранить</paper-button>
             </div>
         </div>
     </div>`;
-  }
-
-  static get is() {
-    return "ht-account-settings-avatar-cropper";
   }
 
   static get properties() {
@@ -163,6 +160,6 @@ class HTAccountSettingsAvatarCropper extends LitElement {
 }
 
 customElements.define(
-  HTAccountSettingsAvatarCropper.is,
+  "ht-account-settings-avatar-cropper",
   HTAccountSettingsAvatarCropper
 );

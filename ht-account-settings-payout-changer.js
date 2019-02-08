@@ -1,15 +1,13 @@
 "use strict";
-import { LitElement, html } from "@polymer/lit-element";
+import { LitElement, html, css } from "lit-element";
 import "@polymer/iron-iconset-svg/iron-iconset-svg.js";
 import "@polymer/iron-icon/iron-icon.js";
 import "@polymer/paper-ripple";
 
 class HTAccountSettingsPayoutChanger extends LitElement {
-  render() {
-    const { payoutType, opened } = this;
-    return html`
-    ${SharedStyles}
-        <style>
+  static styles = [
+    window.SharedStyles,
+    css`<style>
         :host {
             display: flex;
             position: relative;
@@ -92,7 +90,12 @@ class HTAccountSettingsPayoutChanger extends LitElement {
         [hidden] {
             display:none;
         }
-    </style>
+    </style>`
+  ];
+
+  render() {
+    const { payoutType, opened } = this;
+    return html`
     <iron-iconset-svg size="24" name="ht-account-settings-payout-changer">
       <svg>
         <defs>
@@ -101,25 +104,24 @@ class HTAccountSettingsPayoutChanger extends LitElement {
       </svg>
     </iron-iconset-svg>
     <div id="container">
-        <div id="changer" @click=${_ => {
-          this._open();
-        }}>
+        <div id="changer" @click="${this._open}">
             <div class="list-dropdown">
-                <div id="bank-card" class="item" ?hidden=${payoutType !==
-                  "bank_card"}>
+                <div id="bank-card" class="item" ?hidden="${payoutType !==
+                  "bank_card"}">
                     <img src="https://res.cloudinary.com/cdn-01ht/image/upload/v1543955073/apps/elements/pages/checkout/credit-card.svg" alt="Bank card payout">
                     <div class="payment-text">Банковская карта</div>
                     <paper-ripple></paper-ripple>
                     <iron-icon icon="ht-account-settings-payout-changer:keyboard-arrow-down"></iron-icon>
                 </div>
-                <div id="bank_account" class="item" ?hidden=${payoutType !==
-                  "bank_account"}>
+                <div id="bank_account" class="item" ?hidden="${payoutType !==
+                  "bank_account"}">
                     <img src="https://res.cloudinary.com/cdn-01ht/image/upload/v1544724466/apps/elements/pages/account/payout/bank-account.svg" alt="Bank account">
                     <div class="payment-text">Банковский счет (в РФ)</div>
                     <paper-ripple></paper-ripple>
                     <iron-icon icon="ht-account-settings-payout-changer:keyboard-arrow-down"></iron-icon>
                 </div>
-                <div id="swift" class="item" ?hidden=${payoutType !== "swift"}>
+                <div id="swift" class="item" ?hidden="${payoutType !==
+                  "swift"}">
                     <img src="https://res.cloudinary.com/cdn-01ht/image/upload/v1544694478/logos/swift/logo.svg" alt="S.W.I.F.T. payout">
                     <div class="payment-text">SWIFT</div>
                     <paper-ripple></paper-ripple>
@@ -127,34 +129,34 @@ class HTAccountSettingsPayoutChanger extends LitElement {
                 </div>
             </div>
         </div>
-        <div id="dropdown" ?hidden=${!opened}>
+        <div id="dropdown" ?hidden="${!opened}">
             <div class="list-dropdown">
-                <div id="bank-card" class="item" ?hidden=${payoutType ===
-                  "bank_card"} @click=${_ => {
+                <div id="bank-card" class="item" ?hidden="${payoutType ===
+                  "bank_card"}" @click="${_ => {
       this._change("bank_card");
-    }} @tap=${_ => {
+    }}" @tap="${_ => {
       this._change("bank_card");
-    }}>
+    }}">
                     <img src="https://res.cloudinary.com/cdn-01ht/image/upload/v1543955073/apps/elements/pages/checkout/credit-card.svg" alt="Bank card payment">
                     <div class="payment-text">Банковская карта</div>
                     <paper-ripple></paper-ripple>
                 </div>
-                <div id="bank_account" class="item" ?hidden=${payoutType ===
-                  "bank_account"} @click=${_ => {
+                <div id="bank_account" class="item" ?hidden="${payoutType ===
+                  "bank_account"}" @click="${_ => {
       this._change("bank_account");
-    }} @tap=${_ => {
+    }}" @tap="${_ => {
       this._change("bank_account");
-    }}>
+    }}">
                     <img src="https://res.cloudinary.com/cdn-01ht/image/upload/v1544724466/apps/elements/pages/account/payout/bank-account.svg" alt="Bank account">
                     <div class="payment-text">Банковский счет (в РФ)</div>
                     <paper-ripple></paper-ripple>
                 </div>
-                <div id="swift" class="item" ?hidden=${payoutType ===
-                  "swift"} @click=${_ => {
+                <div id="swift" class="item" ?hidden="${payoutType ===
+                  "swift"}" @click="${_ => {
       this._change("swift");
-    }} @tap=${_ => {
+    }}" @tap="${_ => {
       this._change("swift");
-    }}>
+    }}">
                     <img src="https://res.cloudinary.com/cdn-01ht/image/upload/v1544694478/logos/swift/logo.svg" alt="S.W.I.F.T. payout">
                     <div class="payment-text">SWIFT</div>
                     <paper-ripple></paper-ripple>
@@ -163,10 +165,6 @@ class HTAccountSettingsPayoutChanger extends LitElement {
         </div>
     </div>
 `;
-  }
-
-  static get is() {
-    return "ht-account-settings-payout-changer";
   }
 
   static get properties() {
@@ -201,6 +199,6 @@ class HTAccountSettingsPayoutChanger extends LitElement {
 }
 
 customElements.define(
-  HTAccountSettingsPayoutChanger.is,
+  "ht-account-settings-payout-changer",
   HTAccountSettingsPayoutChanger
 );

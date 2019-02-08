@@ -1,15 +1,13 @@
 "use strict";
-import { LitElement, html } from "@polymer/lit-element";
+import { LitElement, html, css } from "lit-element";
 import "@polymer/paper-toggle-button";
 import "@01ht/ht-spinner";
 import "@01ht/ht-page-header";
 
 class HTAccountSettingsNotifications extends LitElement {
-  render() {
-    const { data, loading } = this;
-    return html`
-    ${SharedStyles}
-    <style>
+  static styles = [
+    window.SharedStyles,
+    css`<style>
       ht-account-settings-header {
         margin-bottom: 16px;
       }
@@ -31,26 +29,27 @@ class HTAccountSettingsNotifications extends LitElement {
         display: flex;
         margin-bottom: 16px;
       }
-    </style>
+    </style>`
+  ];
+
+  render() {
+    const { data, loading } = this;
+    return html`
     <div id="container">
       <ht-page-header text="Настройки уведомлений" backURL="/account"></ht-page-header>
       <div class="toggle-container">
-        <paper-toggle-button id="monthDigest" .checked=${
+        <paper-toggle-button id="monthDigest" .checked="${
           data.notifications.monthDigest
-        }>Присылать ежемесячный дайджест</paper-toggle-button>
+        }">Присылать ежемесячный дайджест</paper-toggle-button>
       </div>
       <div id="action">
-        <paper-button raised class="save" ?hidden=${loading} @click=${e => {
-      this._save();
-    }}>Сохранить
+        <paper-button raised class="save" ?hidden="${loading}" @click="${
+      this._save
+    }">Сохранить
         </paper-button>
-        <ht-spinner button ?hidden=${!loading}></ht-spinner>
+        <ht-spinner button ?hidden="${!loading}"></ht-spinner>
       </div>
     </div>`;
-  }
-
-  static get is() {
-    return "ht-account-settings-notifications";
   }
 
   static get properties() {
@@ -101,6 +100,6 @@ class HTAccountSettingsNotifications extends LitElement {
 }
 
 customElements.define(
-  HTAccountSettingsNotifications.is,
+  "ht-account-settings-notifications",
   HTAccountSettingsNotifications
 );
