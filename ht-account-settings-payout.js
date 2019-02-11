@@ -5,90 +5,85 @@ import "@01ht/ht-spinner";
 import "@01ht/ht-page-header";
 import "./ht-account-settings-payout-changer.js";
 
+import { styles } from "@01ht/ht-theme/styles";
+
 class HTAccountSettingsPayout extends LitElement {
-  static styles = [
-    window.SharedStyles,
-    css`<style>
-      :host {
-        display: block;
-        position: relative;
-        box-sizing: border-box;
-      }
+  static get styles() {
+    return [
+      styles,
+      css`
+        .card ht-account-settings-payout-changer {
+          padding-top: 8px;
+        }
 
-      .card ht-account-settings-payout-changer {
-        padding-top: 8px;
-      }
-  
-      #container {
-        display:flex;
-        flex-direction: column;
-        max-width:600px;
-        margin:auto;
-      }
-      
-      .card {
-        font-size: 14px;
-        position:relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        border-radius:3px;
-        background: #fff;
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-      }
+        #container {
+          display: flex;
+          flex-direction: column;
+          max-width: 600px;
+          margin: auto;
+        }
 
-      .section {
-        padding: 24px 16px;
-      }
+        .card {
+          font-size: 14px;
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          border-radius: 3px;
+          background: #fff;
+          box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+            0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+        }
 
-      .card .separator {
-        background: #ddd;
-        height: 1px;
-        padding: 0;
-      }
+        .section {
+          padding: 24px 16px;
+        }
 
-      .mini-title {
-        color: var(--secondary-text-color);
-        font-size: 16px;
-      }
+        .card .separator {
+          background: #ddd;
+          height: 1px;
+          padding: 0;
+        }
 
-      .notify {
-        padding: 4px 8px;
-        background: #f5f5b4;
-        border-radius: 4px;
-        padding: 8px;
-        margin: 16px 0;
-      }
+        .mini-title {
+          color: var(--secondary-text-color);
+          font-size: 16px;
+        }
 
-      .notify span {
-        border: 1px solid #ddd;
-        background: #fff;
-        padding: 2px 4px;
-      }
+        .notify {
+          padding: 4px 8px;
+          background: #f5f5b4;
+          border-radius: 4px;
+          padding: 8px;
+          margin: 16px 0;
+        }
 
-      .input-sub-text {
-        color: var(--secondary-text-color);
-        font-size:13px;
-        margin-top: -8px;
-      }
+        .notify span {
+          border: 1px solid #ddd;
+          background: #fff;
+          padding: 2px 4px;
+        }
 
-      .input-spacer {
-        margin:32px
-      }
+        .input-sub-text {
+          color: var(--secondary-text-color);
+          font-size: 13px;
+          margin-top: -8px;
+        }
 
-      .actions {
-        padding: 16px;
-        display:flex;
-        justify-content: flex-end;
-        align-items: center;
-        background: #fafafa;
-      }
+        .input-spacer {
+          margin: 32px;
+        }
 
-      [hidden] {
-          display:none
-      }
-    </style>`
-  ];
+        .actions {
+          padding: 16px;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          background: #fafafa;
+        }
+      `
+    ];
+  }
 
   render() {
     let { data, loading, payoutType } = this;

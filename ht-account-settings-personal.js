@@ -9,16 +9,13 @@ import "@01ht/ht-spinner";
 import "@01ht/ht-wysiwyg";
 import "@01ht/ht-page-header";
 
+import { styles } from "@01ht/ht-theme/styles";
+
 class HTAccountSettingsPersonal extends LitElement {
-  static styles = [
-    window.SharedStyles,
-    css`<style>
-        :host {
-          display: block;
-          position: relative;
-          box-sizing: border-box;
-        }
-    
+  static get styles() {
+    return [
+      styles,
+      css`
         h4 {
           font-size: 14px;
           font-weight: 500;
@@ -26,21 +23,21 @@ class HTAccountSettingsPersonal extends LitElement {
         }
 
         paper-input {
-          max-width:400px;
-          width:100%;
+          max-width: 400px;
+          width: 100%;
         }
-    
+
         #container {
-          display:flex;
+          display: flex;
           flex-direction: column;
-          max-width:600px;
-          margin:auto;
+          max-width: 600px;
+          margin: auto;
         }
-        
+
         #nameInURLContainer {
-          display:flex;
-          align-items:center;
-          position:relative;
+          display: flex;
+          align-items: center;
+          position: relative;
           max-width: 400px;
         }
 
@@ -53,34 +50,31 @@ class HTAccountSettingsPersonal extends LitElement {
           position: absolute;
           top: 28px;
           height: 24px;
-          right:0;
-          bottom:0;
-          left:0;
-          display:flex;
-          justify-content:flex-end;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          display: flex;
+          justify-content: flex-end;
         }
 
         #email-container {
-          position:relative;
-          display:flex;
-          align-items:center;
+          position: relative;
+          display: flex;
+          align-items: center;
         }
 
         #email-container paper-button {
-          margin-left:16px;
+          margin-left: 16px;
         }
-    
+
         #action {
           margin: 16px 0;
           display: flex;
           justify-content: flex-end;
         }
-
-        [hidden] {
-            display:none
-        }
-    </style>`
-  ];
+      `
+    ];
+  }
 
   render() {
     const { data, loading, emailVerified } = this;

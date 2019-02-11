@@ -6,45 +6,53 @@ import "@polymer/paper-button";
 import { cropperjsStyles } from "./cropperjs-styles.js";
 import Cropper from "cropperjs/dist/cropper.esm.js";
 
+import { styles } from "@01ht/ht-theme/styles";
+
 class HTAccountSettingsAvatarCropper extends LitElement {
-  static styles = [
-    window.SharedStyles,
-    cropperjsStyles,
-    css`<style>
-    img {
-        max-width: 100%;
-    }
+  static get styles() {
+    return [
+      styles,
+      cropperjsStyles,
+      css`
+        img {
+          max-width: 100%;
+        }
 
-    #cropper {
-        display: flex;
-        position: relative;
-        flex-wrap: wrap;
-        margin-top:16px;
-    }
+        #cropper {
+          display: flex;
+          position: relative;
+          flex-wrap: wrap;
+          margin-top: 16px;
+        }
 
-    #crop-region {
-      max-width: 500px;
-      height: 300px;
-    }
+        #crop-region {
+          max-width: 500px;
+          height: 300px;
+        }
 
-    #preview-block {
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-    }
+        #preview-block {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
 
-    #preview {
-      min-width: 128px;
-      min-height: 128px;
-      margin: 32px;
-      overflow: hidden;
-      border: 1px solid #ddd;
-      border-radius: 50%;
-      background: #fff;
-    }
-    </style>`
-  ];
+        #preview {
+          min-width: 128px;
+          min-height: 128px;
+          margin: 32px;
+          overflow: hidden;
+          border: 1px solid #ddd;
+          border-radius: 50%;
+          background: #fff;
+        }
+
+        #cropper[hidden] {
+          display: none;
+        }
+      `
+    ];
+  }
 
   render() {
     const { showCropper } = this;

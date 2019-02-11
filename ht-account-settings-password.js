@@ -9,37 +9,41 @@ import "@01ht/ht-spinner";
 import "@01ht/ht-page-header";
 import "zxcvbn/dist/zxcvbn.js";
 
+import { styles } from "@01ht/ht-theme/styles";
+
 class HTAccountSettingsPassword extends LitElement {
-  static styles = [
-    window.SharedStyles,
-    css`<style>
+  static get styles() {
+    return [
+      styles,
+      css`
         paper-input {
-            max-width: 300px;
+          max-width: 300px;
         }
-    
+
         #container {
-            display: flex;
-            flex-direction: column;
-            max-width: 600px;
-            margin: auto;
+          display: flex;
+          flex-direction: column;
+          max-width: 600px;
+          margin: auto;
         }
 
         span {
-            color: var(--secondary-text-color);
+          color: var(--secondary-text-color);
         }
 
         #strength {
-            margin-top:4px;
-            font-size:14px;
+          margin-top: 4px;
+          font-size: 14px;
         }
-    
+
         #action {
-            margin: 16px 0;
-            display: flex;
-            justify-content: flex-end;
+          margin: 16px 0;
+          display: flex;
+          justify-content: flex-end;
         }
-    </style>`
-  ];
+      `
+    ];
+  }
 
   render() {
     const { loading, strengthObj } = this;

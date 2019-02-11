@@ -10,141 +10,149 @@ import "@01ht/ht-spinner";
 import "@01ht/ht-page-header";
 import "./ht-account-settings-avatar-cropper";
 
+import { styles } from "@01ht/ht-theme/styles";
+
 import {
   // callTestHTTPFunction,
   callFirebaseHTTPFunction
 } from "@01ht/ht-client-helper-functions";
 
 class HTAccountSettingsAvatar extends LitElement {
-  static styles = [
-    window.SharedStyles,
-    css`<style>
-    a {
-      color:inherit;
-    }
+  static get styles() {
+    return [
+      styles,
+      css`
+        a {
+          color: inherit;
+        }
 
-    ht-image {
-      width: 128px;
-      height:128px;
-      border-radius: 50%;
-      overflow:hidden;
-    }
+        ht-image {
+          width: 128px;
+          height: 128px;
+          border-radius: 50%;
+          overflow: hidden;
+        }
 
-    paper-button iron-icon {
-      margin-right: 8px;
-    }
+        paper-button iron-icon {
+          margin-right: 8px;
+        }
 
-    paper-icon-button {
-      margin-right:16px;
-    }
+        paper-icon-button {
+          margin-right: 16px;
+        }
 
-    #container {
-      max-width: 800px;
-      width:100%;
-      margin:auto;
-      display:flex;
-      flex-direction:column;
-    }
+        #container {
+          max-width: 800px;
+          width: 100%;
+          margin: auto;
+          display: flex;
+          flex-direction: column;
+        }
 
-    #header {
-      display:flex;
-      align-items:center;
-    }
+        #header {
+          display: flex;
+          align-items: center;
+        }
 
-    #loading {
-      display:flex;
-      position:absolute;
-      top:0;
-      background:rgba(255, 255, 255, 0.7);
-      right:0;
-      bottom:0;
-      left:0;
-      justify-content:center;
-      align-items:center;
-    }
+        #loading {
+          display: flex;
+          position: absolute;
+          top: 0;
+          background: rgba(255, 255, 255, 0.7);
+          right: 0;
+          bottom: 0;
+          left: 0;
+          justify-content: center;
+          align-items: center;
+        }
 
-    #preview {
-        display:flex;
-        align-items:center;
-        margin-top:16px;
-    }
+        #preview {
+          display: flex;
+          align-items: center;
+          margin-top: 16px;
+        }
 
-    #settings {
-        display:flex;
-        position:relative;
-        flex-direction:column;
-    }
-    
-    #sync {
-        display:flex;
-        flex-direction:column;
-    }
+        #settings {
+          display: flex;
+          position: relative;
+          flex-direction: column;
+        }
 
-    #sync-title {
-        font-size: 16px;
-    }
+        #sync {
+          display: flex;
+          flex-direction: column;
+        }
 
-    #sync-list {
-      margin-top:16px;
-      display:flex;
-      flex-wrap:wrap;
-    }
+        #sync-title {
+          font-size: 16px;
+        }
 
-    #sync-list > * {
-      display:flex;
-      flex-direction:column;
-      margin: 0 16px 16px 0;
-      width: 140px;
-    }
+        #sync-list {
+          margin-top: 16px;
+          display: flex;
+          flex-wrap: wrap;
+        }
 
-    #sync img {
-      display: block;
-      border-radius: 50%;
-      width: 64px;
-      border: 1px solid #fff;
-      margin: 8px 0 16px 0;
-      background:#fff;
-    }
+        #sync-list > * {
+          display: flex;
+          flex-direction: column;
+          margin: 0 16px 16px 0;
+          width: 140px;
+        }
 
-    .social-button-title {
-      display:flex;
-      align-items:center;
-    }
+        #sync img {
+          display: block;
+          border-radius: 50%;
+          width: 64px;
+          border: 1px solid #fff;
+          margin: 8px 0 16px 0;
+          background: #fff;
+        }
 
-    .social {
-      background: #fff;
-      color:#757575;
-      padding: 8px;
-    }
+        .social-button-title {
+          display: flex;
+          align-items: center;
+        }
 
-    [provider="google.com"] {
-        color:#757575;
-    }
+        .social {
+          background: #fff;
+          color: #757575;
+          padding: 8px;
+        }
 
-    [provider="facebook.com"] {
-        background:#3b5998;
-        color:#fff;
-    }
+        [provider="google.com"] {
+          color: #757575;
+        }
 
-    [provider="twitter.com"] {
-        background:#55acee;
-        color:#fff;
-    }
+        [provider="facebook.com"] {
+          background: #3b5998;
+          color: #fff;
+        }
 
-    [provider="github.com"] {
-        background:#333;
-        color:#fff;
-    }
+        [provider="twitter.com"] {
+          background: #55acee;
+          color: #fff;
+        }
 
-    #sync, #reset, #cropper {
-        margin-top:16px;
-    }
+        [provider="github.com"] {
+          background: #333;
+          color: #fff;
+        }
 
-    [hidden], #settings[hidden],  #loading[hidden] {
-        display:none;
-    }
-    </style>`
-  ];
+        #sync,
+        #reset,
+        #cropper {
+          margin-top: 16px;
+        }
+
+        [hidden],
+        #settings[hidden],
+        #loading[hidden] {
+          display: none;
+        }
+      `
+    ];
+  }
 
   render() {
     const { data, loading } = this;

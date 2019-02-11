@@ -4,88 +4,90 @@ import "@polymer/iron-iconset-svg/iron-iconset-svg.js";
 import "@polymer/iron-icon/iron-icon.js";
 import "@polymer/paper-ripple";
 
+import { styles } from "@01ht/ht-theme/styles";
+
 class HTAccountSettingsContractLegalChanger extends LitElement {
-  static styles = [
-    window.SharedStyles,
-    css`<style>
+  static get styles() {
+    return [
+      styles,
+      css`
         :host {
-            display: flex;
-            position: relative;
-            box-sizing: border-box;
-            width: 100%;
-            margin-top: 8px;
+          display: flex;
+          position: relative;
+          box-sizing: border-box;
+          width: 100%;
+          margin-top: 8px;
         }
 
         iron-icon {
-            color: var(--accent-color);
-            position:absolute;
-            right: 16px;
+          color: var(--accent-color);
+          position: absolute;
+          right: 16px;
         }
 
         #dropdown {
-            z-index:12;
-            position:absolute;
-            left:0;
-            top:80px;
-            right:0;
-            width:100%;
-            height:auto;
-            background: #fff;
-            box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14),
-            0 1px 10px 0 rgba(0, 0, 0, 0.12),
-            0 2px 4px -1px rgba(0, 0, 0, 0.4);
+          z-index: 12;
+          position: absolute;
+          left: 0;
+          top: 80px;
+          right: 0;
+          width: 100%;
+          height: auto;
+          background: #fff;
+          box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+            0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
         }
 
         #container {
-            position:relative;
-            width:100%;
-            border: 1px solid #ddd;
+          position: relative;
+          width: 100%;
+          border: 1px solid #ddd;
         }
 
         #changer {
-            display:flex;
-            width:100%;
-            justify-content:space-between;
-            position:relative;
-            background: #fafafa;
-            box-sizing:border-box;
-            cursor: pointer;
-            height:80px;
-            align-items:center;
-            z-index:13;
+          display: flex;
+          width: 100%;
+          justify-content: space-between;
+          position: relative;
+          background: #fafafa;
+          box-sizing: border-box;
+          cursor: pointer;
+          height: 80px;
+          align-items: center;
+          z-index: 13;
         }
 
-       .item {
-            display:flex;
-            align-items: center;
-            justify-content: center;
-            text-transform: none;
-            height: 80px;
-            position: relative;
-            border-top: 1px solid #ddd;
-            color: #424242;
-            box-sizing: border-box;
-            cursor:pointer;
+        .item {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-transform: none;
+          height: 80px;
+          position: relative;
+          border-top: 1px solid #ddd;
+          color: #424242;
+          box-sizing: border-box;
+          cursor: pointer;
         }
-        
+
         .text-block {
-          display:flex;
-          flex-direction:column;
+          display: flex;
+          flex-direction: column;
           padding-right: 32px;
         }
 
-         #changer .item {
-          border:none;
+        #changer .item {
+          border: none;
         }
 
         .list-dropdown {
-            width: 100%;
+          width: 100%;
         }
 
         .payment-text {
-            font-size: 16px;
-            font-weight: 400;
-            letter-spacing:normal;
+          font-size: 16px;
+          font-weight: 400;
+          letter-spacing: normal;
         }
 
         .sub {
@@ -93,16 +95,17 @@ class HTAccountSettingsContractLegalChanger extends LitElement {
         }
 
         img {
-            width: auto;
-            height: 32px;
-            margin: 0 10px;
+          width: auto;
+          height: 32px;
+          margin: 0 10px;
         }
 
         [hidden] {
-            display:none;
+          display: none;
         }
-    </style>`
-  ];
+      `
+    ];
+  }
 
   render() {
     const { legalType, opened } = this;

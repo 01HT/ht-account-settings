@@ -4,94 +4,97 @@ import "@polymer/iron-iconset-svg/iron-iconset-svg.js";
 import "@polymer/iron-icon/iron-icon.js";
 import "@polymer/paper-ripple";
 
+import { styles } from "@01ht/ht-theme/styles";
+
 class HTAccountSettingsPayoutChanger extends LitElement {
-  static styles = [
-    window.SharedStyles,
-    css`<style>
+  static get styles() {
+    return [
+      styles,
+      css`
         :host {
-            display: flex;
-            position: relative;
-            box-sizing: border-box;
-            width: 100%;
+          display: flex;
+          position: relative;
+          box-sizing: border-box;
+          width: 100%;
         }
 
         iron-icon {
-            color: var(--accent-color);
-            position:absolute;
-            right: 16px;
+          color: var(--accent-color);
+          position: absolute;
+          right: 16px;
         }
 
         #dropdown {
-            z-index:9;
-            position:absolute;
-            left:0;
-            top:60px;
-            right:0;
-            width:100%;
-            height:auto;
-            background: #fff;
-            box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14),
-            0 1px 10px 0 rgba(0, 0, 0, 0.12),
-            0 2px 4px -1px rgba(0, 0, 0, 0.4);
+          z-index: 9;
+          position: absolute;
+          left: 0;
+          top: 60px;
+          right: 0;
+          width: 100%;
+          height: auto;
+          background: #fff;
+          box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+            0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
         }
 
         #container {
-            position:relative;
-            width:100%;
-            border: 1px solid #ddd;
+          position: relative;
+          width: 100%;
+          border: 1px solid #ddd;
         }
 
         #changer {
-            display:flex;
-            width:100%;
-            justify-content:space-between;
-            position:relative;
-            background: #fafafa;
-            box-sizing:border-box;
-            cursor: pointer;
-            height:60px;
-            align-items:center;
-            z-index:10;
+          display: flex;
+          width: 100%;
+          justify-content: space-between;
+          position: relative;
+          background: #fafafa;
+          box-sizing: border-box;
+          cursor: pointer;
+          height: 60px;
+          align-items: center;
+          z-index: 10;
         }
 
-       .item {
-            display:flex;
-            align-items: center;
-            justify-content: center;
-            text-transform: none;
-            height: 60px;
-            position: relative;
-            border-top: 1px solid #ddd;
-            color: #424242;
-            box-sizing: border-box;
-            cursor:pointer;
+        .item {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-transform: none;
+          height: 60px;
+          position: relative;
+          border-top: 1px solid #ddd;
+          color: #424242;
+          box-sizing: border-box;
+          cursor: pointer;
         }
 
         #changer .item {
-            border:none;
+          border: none;
         }
 
         .list-dropdown {
-            width: 100%;
+          width: 100%;
         }
 
         .payment-text {
-            font-size: 18px;
-            margin-left: 10px;
-            font-weight: 400;
-            letter-spacing:normal;
+          font-size: 18px;
+          margin-left: 10px;
+          font-weight: 400;
+          letter-spacing: normal;
         }
 
         img {
-            width: auto;
-            height: 32px;
+          width: auto;
+          height: 32px;
         }
 
         [hidden] {
-            display:none;
+          display: none;
         }
-    </style>`
-  ];
+      `
+    ];
+  }
 
   render() {
     const { payoutType, opened } = this;

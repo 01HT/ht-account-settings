@@ -5,138 +5,145 @@ import "@polymer/iron-icon";
 import "@01ht/ht-page-header";
 import "@01ht/ht-image";
 
+import { styles } from "@01ht/ht-theme/styles";
+
 class HTAccountSettingsHome extends LitElement {
-  static styles = [
-    window.SharedStyles,
-    css`<style>
+  static get styles() {
+    return [
+      styles,
+      css`
         a {
-            display: block;
+          display: block;
         }
 
         a:hover {
-            text-decoration: none;
+          text-decoration: none;
         }
-    
+
         iron-icon {
-            margin-right: 16px;
-            min-width: 32px;
-            min-height: 32px;
-            color: var(--accent-color);
+          margin-right: 16px;
+          min-width: 32px;
+          min-height: 32px;
+          color: var(--accent-color);
         }
-    
+
         #container {
-            display: grid;
-            grid-gap: 16px;
-            grid-template-columns: auto auto auto;
-            margin-top:32px;
+          display: grid;
+          grid-gap: 16px;
+          grid-template-columns: auto auto auto;
+          margin-top: 32px;
         }
-    
+
         #avatar {
-            grid-column: 1 / 4;
-            display:flex;
-            flex-direction: column;
-            align-items: center;
-        }    
-    
+          grid-column: 1 / 4;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
         #avatar > a {
-            display: block;
-            position: relative;
-            margin: auto;
-            width: 128px;
-            height: 128px;
-            border-radius: 50%;
-            overflow: hidden;
+          display: block;
+          position: relative;
+          margin: auto;
+          width: 128px;
+          height: 128px;
+          border-radius: 50%;
+          overflow: hidden;
         }
 
         #avatar a div {
-            display:none;
-            position: absolute;
-            top:0;
-            right:0;
-            bottom:0;
-            left:0;
-            background-color: hsla(0, 0%, 0%, 0.5);
+          display: none;
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          background-color: hsla(0, 0%, 0%, 0.5);
         }
 
         #avatar > a:hover div {
-            display:flex;
-            justify-content:center;
-            align-items:center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
 
         #avatar > div {
-            margin-top: 16px;
-            font-size: 18px;
+          margin-top: 16px;
+          font-size: 18px;
         }
 
         #avatar iron-icon {
-            margin:0;
-            width: 48px;
-            height: 48px;
-            color: #fff;
+          margin: 0;
+          width: 48px;
+          height: 48px;
+          color: #fff;
         }
-    
+
         .item {
-            overflow:hidden;
-            padding: 24px;
-            //box-shadow: 0 3px 3px -2px rgba(0, 0, 0, .2), 0 3px 4px 0 rgba(0, 0, 0, .14), 0 1px 8px 0 rgba(0, 0, 0, .12);
-            display: flex;
-            flex-direction: column;
-            width: auto;
+          overflow: hidden;
+          padding: 24px;
+          //box-shadow: 0 3px 3px -2px rgba(0, 0, 0, .2), 0 3px 4px 0 rgba(0, 0, 0, .14), 0 1px 8px 0 rgba(0, 0, 0, .12);
+          display: flex;
+          flex-direction: column;
+          width: auto;
         }
-    
+
         .title {
-            color: #414549;
-            font-size: 20px;
-            display: flex;
-            min-height: 32px;
-            align-items: center;
-            margin-bottom: 16px;
+          color: #414549;
+          font-size: 20px;
+          display: flex;
+          min-height: 32px;
+          align-items: center;
+          margin-bottom: 16px;
         }
-    
+
         .description {
-            margin: 24px 0;
+          margin: 24px 0;
         }
-    
+
         .links {
-            display: flex;
-            flex-direction: column;
+          display: flex;
+          flex-direction: column;
         }
 
         .links > * {
-            margin: 8px 0;
+          margin: 8px 0;
         }
 
         [disabled] {
-            cursor:default;
-            color:#ccc;
+          cursor: default;
+          color: #ccc;
         }
 
-        @media (max-width:1040px) {
-            #container {
-                grid-template-columns: auto auto;
-            }
+        @media (max-width: 1040px) {
+          #container {
+            grid-template-columns: auto auto;
+          }
 
-            #avatar {
-                grid-column: 1 / 3;
-            }
+          #avatar {
+            grid-column: 1 / 3;
+          }
 
-            #settings {
-                grid-column: 1 / 3;
-            }
+          #settings {
+            grid-column: 1 / 3;
+          }
         }
 
-        @media (max-width:650px) {
-            #container {
-                grid-template-columns: auto;
-            }
+        @media (max-width: 650px) {
+          #container {
+            grid-template-columns: auto;
+          }
 
-            #avatar,#security,#personal, #settings {
-                grid-column: 1;
-            }
+          #avatar,
+          #security,
+          #personal,
+          #settings {
+            grid-column: 1;
+          }
         }
-    </style>`
-  ];
+      `
+    ];
+  }
 
   render() {
     const { data } = this;

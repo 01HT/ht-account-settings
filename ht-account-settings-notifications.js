@@ -4,33 +4,37 @@ import "@polymer/paper-toggle-button";
 import "@01ht/ht-spinner";
 import "@01ht/ht-page-header";
 
+import { styles } from "@01ht/ht-theme/styles";
+
 class HTAccountSettingsNotifications extends LitElement {
-  static styles = [
-    window.SharedStyles,
-    css`<style>
-      ht-account-settings-header {
-        margin-bottom: 16px;
-      }
-    
-      #container {
-        display: flex;
-        flex-direction: column;
-        max-width: 600px;
-        margin: auto;
-      }
-    
-      #action {
-        margin: 16px 0;
-        display: flex;
-        justify-content: flex-end;
-      }
-    
-      .toggle-container {
-        display: flex;
-        margin-bottom: 16px;
-      }
-    </style>`
-  ];
+  static get styles() {
+    return [
+      styles,
+      css`
+        ht-account-settings-header {
+          margin-bottom: 16px;
+        }
+
+        #container {
+          display: flex;
+          flex-direction: column;
+          max-width: 600px;
+          margin: auto;
+        }
+
+        #action {
+          margin: 16px 0;
+          display: flex;
+          justify-content: flex-end;
+        }
+
+        .toggle-container {
+          display: flex;
+          margin-bottom: 16px;
+        }
+      `
+    ];
+  }
 
   render() {
     const { data, loading } = this;

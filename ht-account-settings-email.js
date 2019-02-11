@@ -5,38 +5,32 @@ import "@polymer/paper-input/paper-input.js";
 import "@01ht/ht-spinner";
 import "@01ht/ht-page-header";
 
+import { styles } from "@01ht/ht-theme/styles";
+
 class HTAccountSettingsEmail extends LitElement {
-  static styles = [
-    window.SharedStyles,
-    css`<style>
-        :host {
-            display: block;
-            position: relative;
-            box-sizing: border-box;
-        }
-    
+  static get styles() {
+    return [
+      styles,
+      css`
         paper-input {
-            max-width: 300px;
+          max-width: 300px;
         }
-    
+
         #container {
-            display: flex;
-            flex-direction: column;
-            max-width: 600px;
-            margin: auto;
+          display: flex;
+          flex-direction: column;
+          max-width: 600px;
+          margin: auto;
         }
-    
+
         #action {
-            margin: 16px 0;
-            display: flex;
-            justify-content: flex-end;
+          margin: 16px 0;
+          display: flex;
+          justify-content: flex-end;
         }
-    
-        [hidden] {
-            display: none
-        }
-    </style>`
-  ];
+      `
+    ];
+  }
 
   render() {
     const { loading } = this;

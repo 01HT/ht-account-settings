@@ -11,31 +11,28 @@ import "./ht-account-settings-notifications";
 import "./ht-account-settings-contract";
 import "./ht-account-settings-payout";
 
+import { styles } from "@01ht/ht-theme/styles";
+
 class HTAccountSettings extends LitElement {
-  static styles = css`<style>
-    :host {
-        display: block;
-        position: relative;
-        box-sizing: border-box;
-    }
+  static get styles() {
+    return [
+      styles,
+      css`
+        #container {
+          display: flex;
+          flex-direction: column;
+        }
 
-    #container {
-      display:flex;
-      flex-direction:column;
-    }
+        #main > * {
+          display: none;
+        }
 
-    #main > * {
-        display: none;
-    }
-
-    #main>[active] {
-        display: block;
-    }
-
-    [hidden] {
-      display:none;
-    }
-    </style>`;
+        #main > [active] {
+          display: block;
+        }
+      `
+    ];
+  }
 
   render() {
     const { userData, loading, page, userId } = this;
