@@ -97,7 +97,7 @@ class HTAccountSettingsPersonal extends LitElement {
     }">Подтвердить email</paper-button>
           <!--<paper-tooltip>Адрес электронной почты меняется автоматически при входе в систему.</paper-tooltip>-->
         </div>
-        <paper-input id="displayName" label="Отображаемое имя" auto-validate allowed-pattern="^[0-9a-z\-]+$" value="${
+        <paper-input id="displayName" label="Отображаемое имя" auto-validate allowed-pattern="^[0-9a-zA-Z \-]+$" value="${
           data.displayName
         }"></paper-input>
         <div id="nameInURLContainer">
