@@ -87,6 +87,7 @@ class HTAccountSettingsPayout extends LitElement {
 
   render() {
     let { data, loading, payoutType } = this;
+    if (payoutType === undefined) payoutType = "bank_card";
     return html`
     <div id="container">
         <ht-page-header text="Настройки выплат" backURL="/account"></ht-page-header>
