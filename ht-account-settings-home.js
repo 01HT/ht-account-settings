@@ -2,7 +2,6 @@
 import { LitElement, html, css } from "lit-element";
 import "@polymer/iron-iconset-svg";
 import "@polymer/iron-icon";
-import "@01ht/ht-page-header";
 import "@01ht/ht-image";
 
 import { styles } from "@01ht/ht-theme/styles";
@@ -67,16 +66,38 @@ class HTAccountSettingsHome extends LitElement {
           align-items: center;
         }
 
-        #avatar > div {
-          margin-top: 16px;
-          font-size: 18px;
-        }
-
         #avatar iron-icon {
           margin: 0;
           width: 48px;
           height: 48px;
           color: #fff;
+        }
+
+        #hello-text {
+          font-size: 1.75rem;
+          font-weight: 400;
+          line-height: 2.25rem;
+          -webkit-hyphens: auto;
+          hyphens: auto;
+          word-break: break-word;
+          word-wrap: break-word;
+          color: #202124;
+          text-align: center;
+          margin-top: 16px;
+        }
+
+        #sub-text {
+          letter-spacing: 0.00625em;
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 1.5rem;
+          -webkit-hyphens: auto;
+          hyphens: auto;
+          word-break: break-word;
+          word-wrap: break-word;
+          color: #5f6368;
+          text-align: center;
+          max-width: 800px;
         }
 
         .item {
@@ -168,7 +189,6 @@ class HTAccountSettingsHome extends LitElement {
             </defs>
         </svg>
     </iron-iconset-svg>
-    <ht-page-header text="Аккаунт 01HT"></ht-page-header>
     <div id="container">
         <div id="avatar">
             <a href="/account/avatar">
@@ -184,9 +204,8 @@ class HTAccountSettingsHome extends LitElement {
                 </ht-image>
                 <div><iron-icon icon="ht-account-settings-home:photo-camera"></iron-icon></div>
             </a>
-            <div><a href="/user/${data.nameInURL}/${data.userNumber}">${
-      data.displayName
-    }</a></div>
+        <h1 id="hello-text">Добро пожаловать, ${data.displayName}!</h1>
+        <div id="sub-text">Настройте параметры конфиденциальности, безопасности, уведомлений, чтобы вам было удобнее и эффективнее пользоваться сервисами 01HT.</div>
         </div>
         <div id="security" class="item">
             <div class="title">
@@ -215,12 +234,6 @@ class HTAccountSettingsHome extends LitElement {
             <!--<div class="description"></div>-->
             <div class="links">
                 <a href="/account/notifications">Настройка уведомлений</a>
-                <a href="/account/contract" ?hidden="${!data.isAuthor}">Настройки договора</a>
-                <div disabled ?hidden="${
-                  data.isAuthor
-                }">Настройки договора</div>
-                <a href="/account/payout" ?hidden="${!data.isAuthor}">Настройки выплат</a>
-                <div disabled ?hidden="${data.isAuthor}">Настройки выплат</div>
             </div>
         </div>
     </div>`;

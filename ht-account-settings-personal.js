@@ -150,7 +150,7 @@ class HTAccountSettingsPersonal extends LitElement {
         <paper-input id="github" label="GitHub" value="${
           data.github
         }"></paper-input>
-        <h4>О себе</h4>
+        <h4>О себе (отображается в приложении Elements)</h4>
         <ht-wysiwyg id="description"></ht-wysiwyg>
     
         <div id="action">

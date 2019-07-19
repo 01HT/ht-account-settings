@@ -16,7 +16,6 @@
     "@polymer/paper-toggle-button": "^3.0.1",
     "@polymer/paper-tooltip": "^3.0.1",
     "@polymer/paper-radio-group": "^3.0.1",
-    "@01ht/ht-elements-orders": "01ht/ht-elements-orders",
     "@01ht/ht-image": "01ht/ht-image",
     "@01ht/ht-wysiwyg": "01ht/ht-wysiwyg",
     "@01ht/ht-spinner": "01ht/ht-spinner",
