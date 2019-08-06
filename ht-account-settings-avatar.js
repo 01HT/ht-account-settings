@@ -179,11 +179,11 @@ class HTAccountSettingsAvatar extends LitElement {
         <div id="settings">
             <div id="preview">
             <ht-image image="${
-              window.cloudinaryURL
+              window.appConfig.cloudinary.url
             }/c_scale,r_max,f_auto,h_256,w_256/v${data.avatar.version}/${
       data.avatar.public_id
     }.${data.avatar.format}" placeholder="${
-      window.cloudinaryURL
+      window.appConfig.cloudinary.url
     }/c_scale,r_max,f_auto,h_32,w_32/v${data.avatar.version}/${
       data.avatar.public_id
     }.${data.avatar.format}"></ht-image>
@@ -201,7 +201,9 @@ class HTAccountSettingsAvatar extends LitElement {
                       this._syncSocial(e);
                     }}"><div><img src="${
                       item.photoURL
-                    }"></div><div class="social-button-title"><iron-icon src="${cloudinaryURL}/image/upload/logos/${item.providerId.replace(
+                    }"></div><div class="social-button-title"><iron-icon src="${
+                      window.appConfig.cloudinary.url
+                    }/image/upload/logos/${item.providerId.replace(
                       ".com",
                       ""
                     )}/logo.svg"></iron-icon>${item.providerId.replace(
@@ -211,7 +213,9 @@ class HTAccountSettingsAvatar extends LitElement {
                 )}
                 <paper-button class="social" raised @click="${
                   this._setDefaultAvatar
-                }"><div><img src="${cloudinaryURL}/image/upload/users/default.svg"></div><div>Стандартный</div>
+                }"><div><img src="${
+      window.appConfig.cloudinary.url
+    }/image/upload/users/default.svg"></div><div>Стандартный</div>
                 </paper-button>
                 </div>
             </div>
